@@ -4,3 +4,4 @@ terraform.tfvars.json
 *.crt
 .terraform*
 *.bak
+.ssh
