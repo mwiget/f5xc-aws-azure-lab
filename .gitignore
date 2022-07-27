@@ -1,0 +1,5 @@
+*tfstate*
+terraform.tfvars.json
+*.p12
+*.crt
+.terraform*
