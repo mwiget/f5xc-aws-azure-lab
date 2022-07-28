@@ -5,3 +5,4 @@ terraform.tfvars.json
 .terraform*
 *.bak
 .ssh
+.azure
