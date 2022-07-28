@@ -1,6 +1,3 @@
-output "azure_resource_group_id" {
-  value = module.azure_resource_group.id
-}
 output "azure_resource_group_name" {
   value = module.azure_resource_group.name
 }
