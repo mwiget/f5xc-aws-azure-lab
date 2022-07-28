@@ -1,8 +1,15 @@
-output "azure_resource_group_name" {
-  value = module.azure_resource_group.name
+output "azure_resource_group_1_name" {
+  value = module.azure_resource_group_1.name
 }
-output "azure_resource_group_location" {
-  value = module.azure_resource_group.location
+output "azure_resource_group_1_location" {
+  value = module.azure_resource_group_1.location
+}
+
+output "azure_resource_group_2_name" {
+  value = module.azure_resource_group_2.name
+}
+output "azure_resource_group_2_location" {
+  value = module.azure_resource_group_2.location
 }
 
 output "azure_vnet_1" {
