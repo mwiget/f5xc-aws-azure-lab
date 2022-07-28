@@ -1,17 +1,16 @@
+image:
+  file: .gitpod.Dockerfile
+  
 # List the start up tasks. Learn more https://www.gitpod.io/docs/config-start-tasks/
 tasks:
   - init: |
       echo "tasks - init"
     before: |
       echo "tasks - init - before"
-      curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-      sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-      sudo apt-get update -y && sudo apt-get install -y terraform jq
-      echo "installing Azure cli ..."
-      curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
     command: |
       echo "tasks - init - command"
       git submodule update --init --recursive
+      cp -rp .azure ~/
     
 # List the ports to expose. Learn more https://www.gitpod.io/docs/config-ports/
 ports:
