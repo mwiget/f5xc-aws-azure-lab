@@ -34,10 +34,58 @@
 #  depends_on        = [module.azure_site_1a]
 #}
 
+module "azure_resource_group" {
+  source              = "./modules/azure/resource_group"
+  resource_group_name = "mw-azure-site1"
+  azure_region        = "westus2"
+}
+
 module "azure_vnet_1" {
   source                  = "./modules/azure/virtual_network"
   azure_vnet_name         = "mw-vnet1"
-  azure_region            = "westus2"
-  resource_group_name     = "mw-azure-site1"
   azure_vnet_primary_ipv4 = "100.64.16.0/20"
+  resource_group_name     = module.azure_resource_group.name
+  azure_region            = module.azure_resource_group.location
+}
+
+module "azure_subnet_1a" {
+  name                    = "mw-subnet-1a"
+  source                  = "./modules/azure/subnet"
+  address_prefix          = "100.64.16.0/24"
+  azure_vnet_name         = module.azure_vnet_1.name
+  resource_group_name     = module.azure_resource_group.name
+}
+
+module "azure_subnet_1b" {
+  name                    = "mw-subnet-1b"
+  source                  = "./modules/azure/subnet"
+  address_prefix          = "100.64.17.0/24"
+  azure_vnet_name         = module.azure_vnet_1.name
+  resource_group_name     = module.azure_resource_group.name
+}
+
+module "azure_workload_1a" {
+  source                  = "./modules/azure/virtual_machine"
+  name                    = "mw-workload-1a"
+  size                    = "Standard_DS1_v2"
+  zone                    = 1
+  subnet_id               = module.azure_subnet_1a.id
+  username                = "azureuser"
+  ssh_key                 = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDr1zH+NmWzf/+qtCTqC/+QAHoWIoq3k3YjH/IsjYdHXZ0mQonsMlrL+owArvLtvi3gXxqPGlO/aWt53v8KAY+RV7IOSbqfFY56k0GTmvPJisSsBkAedruu05hqlFMS/2mkNFL/BsWNzL617LtuFQpN6ud57QSrQruQQtIKTuWUe+XjqkSNiAkvD4zc4tip9ovULhC9QY/IVmhguVDJ0FuQWCDd4l7IM+KjlTXGplN5Y9bIVuU+nnSHnUEkRFxuGX1pvOHB1L31INlD9CVJHDA6bBJyIQgv0WcqoA2/3/8eRqN/pXOe+clglJGRT6bb/+5Sfy6JZoA0OlsyW66VfGR3 mwiget@xeon"
+  custom_data             = "${filebase64("./workload_custom_data.sh")}"
+  resource_group_name     = module.azure_resource_group.name
+  azure_region            = module.azure_resource_group.location
+}
+
+module "azure_workload_1b" {
+  source                  = "./modules/azure/virtual_machine"
+  name                    = "mw-workload-1b"
+  size                    = "Standard_DS1_v2"
+  zone                    = 2
+  subnet_id               = module.azure_subnet_1b.id
+  username                = "azureuser"
+  ssh_key                 = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDr1zH+NmWzf/+qtCTqC/+QAHoWIoq3k3YjH/IsjYdHXZ0mQonsMlrL+owArvLtvi3gXxqPGlO/aWt53v8KAY+RV7IOSbqfFY56k0GTmvPJisSsBkAedruu05hqlFMS/2mkNFL/BsWNzL617LtuFQpN6ud57QSrQruQQtIKTuWUe+XjqkSNiAkvD4zc4tip9ovULhC9QY/IVmhguVDJ0FuQWCDd4l7IM+KjlTXGplN5Y9bIVuU+nnSHnUEkRFxuGX1pvOHB1L31INlD9CVJHDA6bBJyIQgv0WcqoA2/3/8eRqN/pXOe+clglJGRT6bb/+5Sfy6JZoA0OlsyW66VfGR3 mwiget@xeon"
+  custom_data             = "${filebase64("./workload_custom_data.sh")}"
+  resource_group_name     = module.azure_resource_group.name
+  azure_region            = module.azure_resource_group.location
 }
