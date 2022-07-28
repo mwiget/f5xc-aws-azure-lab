@@ -1,3 +1,4 @@
+
 image:
   file: .gitpod.Dockerfile
   
@@ -16,3 +17,7 @@ tasks:
 ports:
   - port: 3000
     onOpen: open-preview
+
+vscode:
+  extensions:
+    - vscodevim.vim
