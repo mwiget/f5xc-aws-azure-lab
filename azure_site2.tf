@@ -19,7 +19,7 @@ module "azure_site_2a" {
   f5xc_azure_default_ce_os_version    = true
   f5xc_azure_no_worker_nodes          = true
   f5xc_azure_total_worker_nodes       = 0
-  public_ssh_key                      = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDr1zH+NmWzf/+qtCTqC/+QAHoWIoq3k3YjH/IsjYdHXZ0mQonsMlrL+owArvLtvi3gXxqPGlO/aWt53v8KAY+RV7IOSbqfFY56k0GTmvPJisSsBkAedruu05hqlFMS/2mkNFL/BsWNzL617LtuFQpN6ud57QSrQruQQtIKTuWUe+XjqkSNiAkvD4zc4tip9ovULhC9QY/IVmhguVDJ0FuQWCDd4l7IM+KjlTXGplN5Y9bIVuU+nnSHnUEkRFxuGX1pvOHB1L31INlD9CVJHDA6bBJyIQgv0WcqoA2/3/8eRqN/pXOe+clglJGRT6bb/+5Sfy6JZoA0OlsyW66VfGR3 mwiget@xeon"
+  public_ssh_key                      = "${file("~/.ssh/id_rsa.pub")}"
 } 
 
 module "azure_site_2b" {
@@ -43,7 +43,7 @@ module "azure_site_2b" {
   f5xc_azure_default_ce_os_version    = true
   f5xc_azure_no_worker_nodes          = true
   f5xc_azure_total_worker_nodes       = 0
-  public_ssh_key                      = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDr1zH+NmWzf/+qtCTqC/+QAHoWIoq3k3YjH/IsjYdHXZ0mQonsMlrL+owArvLtvi3gXxqPGlO/aWt53v8KAY+RV7IOSbqfFY56k0GTmvPJisSsBkAedruu05hqlFMS/2mkNFL/BsWNzL617LtuFQpN6ud57QSrQruQQtIKTuWUe+XjqkSNiAkvD4zc4tip9ovULhC9QY/IVmhguVDJ0FuQWCDd4l7IM+KjlTXGplN5Y9bIVuU+nnSHnUEkRFxuGX1pvOHB1L31INlD9CVJHDA6bBJyIQgv0WcqoA2/3/8eRqN/pXOe+clglJGRT6bb/+5Sfy6JZoA0OlsyW66VfGR3 mwiget@xeon"
+  public_ssh_key                      = "${file("~/.ssh/id_rsa.pub")}"
 } 
 
 module "site_status_check_2a" {
@@ -103,7 +103,7 @@ module "azure_workload_2a" {
   zone                    = 1
   subnet_id               = module.azure_subnet_2a.id
   username                = "azureuser"
-  ssh_key                 = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDr1zH+NmWzf/+qtCTqC/+QAHoWIoq3k3YjH/IsjYdHXZ0mQonsMlrL+owArvLtvi3gXxqPGlO/aWt53v8KAY+RV7IOSbqfFY56k0GTmvPJisSsBkAedruu05hqlFMS/2mkNFL/BsWNzL617LtuFQpN6ud57QSrQruQQtIKTuWUe+XjqkSNiAkvD4zc4tip9ovULhC9QY/IVmhguVDJ0FuQWCDd4l7IM+KjlTXGplN5Y9bIVuU+nnSHnUEkRFxuGX1pvOHB1L31INlD9CVJHDA6bBJyIQgv0WcqoA2/3/8eRqN/pXOe+clglJGRT6bb/+5Sfy6JZoA0OlsyW66VfGR3 mwiget@xeon"
+  ssh_key                 = "${file("~/.ssh/id_rsa.pub")}"
   custom_data             = "${filebase64("./workload_custom_data.sh")}"
   resource_group_name     = module.azure_resource_group_2.name
   azure_region            = module.azure_resource_group_2.location
@@ -116,7 +116,7 @@ module "azure_workload_2b" {
   zone                    = 2
   subnet_id               = module.azure_subnet_2b.id
   username                = "azureuser"
-  ssh_key                 = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDr1zH+NmWzf/+qtCTqC/+QAHoWIoq3k3YjH/IsjYdHXZ0mQonsMlrL+owArvLtvi3gXxqPGlO/aWt53v8KAY+RV7IOSbqfFY56k0GTmvPJisSsBkAedruu05hqlFMS/2mkNFL/BsWNzL617LtuFQpN6ud57QSrQruQQtIKTuWUe+XjqkSNiAkvD4zc4tip9ovULhC9QY/IVmhguVDJ0FuQWCDd4l7IM+KjlTXGplN5Y9bIVuU+nnSHnUEkRFxuGX1pvOHB1L31INlD9CVJHDA6bBJyIQgv0WcqoA2/3/8eRqN/pXOe+clglJGRT6bb/+5Sfy6JZoA0OlsyW66VfGR3 mwiget@xeon"
+  ssh_key                 = "${file("~/.ssh/id_rsa.pub")}"
   custom_data             = "${filebase64("./workload_custom_data.sh")}"
   resource_group_name     = module.azure_resource_group_2.name
   azure_region            = module.azure_resource_group_2.location
