@@ -9,7 +9,7 @@ module "azure_site_2a" {
   f5xc_azure_region              = "eastus"
   f5xc_azure_site_name           = "mw-azure-site-2a"
   f5xc_azure_vnet_resource_group = module.azure_resource_group_2.name
-  f5xc_azure_vnet_local          = module.azure_vnet_1.name
+  f5xc_azure_vnet_local          = module.azure_vnet_2.name
   #f5xc_azure_vnet_primary_ipv4 = "100.64.16.0/22"
   #f5xc_azure_ce_gw_type        = "multi_nic"
   f5xc_azure_ce_gw_type          = "single_nic"
