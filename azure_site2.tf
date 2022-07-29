@@ -39,7 +39,7 @@ module "site_status_check_2" {
 module "azure_resource_group_2" {
   source              = "./modules/azure/resource_group"
   resource_group_name = "mw-azure-site2"
-  azure_region        = "westus2"
+  azure_region        = "eastus"
 }
 
 module "azure_vnet_2" {
