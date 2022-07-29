@@ -6,7 +6,7 @@ module "azure_site_2a" {
   f5xc_namespace                 = "system"
   f5xc_tenant                    = "playground-wtppvaog"
   f5xc_azure_cred                = "sun-az-creds"
-  f5xc_azure_region              = "westus2"
+  f5xc_azure_region              = "eastus"
   f5xc_azure_site_name           = "mw-azure-site-2a"
   f5xc_azure_vnet_resource_group = module.azure_resource_group_2.name
   f5xc_azure_vnet_local          = module.azure_vnet_1.name
@@ -54,7 +54,7 @@ module "azure_subnet_2a" {
   name                    = "mw-subnet-2a"
   source                  = "./modules/azure/subnet"
   address_prefix          = "100.64.16.0/24"
-  azure_vnet_name         = module.azure_vnet_1.name
+  azure_vnet_name         = module.azure_vnet_2.name
   resource_group_name     = module.azure_resource_group_2.name
 }
 
@@ -62,7 +62,7 @@ module "azure_subnet_2b" {
   name                    = "mw-subnet-2b"
   source                  = "./modules/azure/subnet"
   address_prefix          = "100.64.17.0/24"
-  azure_vnet_name         = module.azure_vnet_1.name
+  azure_vnet_name         = module.azure_vnet_2.name
   resource_group_name     = module.azure_resource_group_2.name
 }
 
