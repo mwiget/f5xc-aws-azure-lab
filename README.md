@@ -42,3 +42,18 @@ $ ./show_azure_site_ip_address.sh
 master_private_ip_address = 100.64.16.6
 master_public_ip_address = 20.83.232.216
 ```
+
+some useful commands:
+
+grep for resource groups
+
+```
+az group list --output table | grep mw-
+mw-azure-site1    westus2   Succeeded
+```
+
+delete resource group
+
+```
+az group delete --name mw-azure-site1
+```
