@@ -10,7 +10,7 @@ module "azure_site_2a" {
   f5xc_azure_site_name           = "mw-azure-site-2a"
   f5xc_azure_vnet_resource_group = module.azure_resource_group_2.name
   f5xc_azure_vnet_local          = module.azure_vnet_1.name
-  #f5xc_azure_vnet_primary_ipv4 = "100.64.16.0/20"
+  #f5xc_azure_vnet_primary_ipv4 = "100.64.16.0/22"
   #f5xc_azure_ce_gw_type        = "multi_nic"
   f5xc_azure_ce_gw_type          = "single_nic"
   f5xc_azure_az_nodes            = {
@@ -45,7 +45,7 @@ module "azure_resource_group_2" {
 module "azure_vnet_2" {
   source                  = "./modules/azure/virtual_network"
   azure_vnet_name         = "mw-vnet2"
-  azure_vnet_primary_ipv4 = "100.64.16.0/20"
+  azure_vnet_primary_ipv4 = "100.64.16.0/22"
   resource_group_name     = module.azure_resource_group_2.name
   azure_region            = module.azure_resource_group_2.location
 }
@@ -90,4 +90,28 @@ module "azure_workload_2b" {
   custom_data             = "${filebase64("./workload_custom_data.sh")}"
   resource_group_name     = module.azure_resource_group_2.name
   azure_region            = module.azure_resource_group_2.location
+}
+
+output "azure_resource_group_2_name" {
+  value = module.azure_resource_group_2.name
+}
+output "azure_resource_group_2_location" {
+  value = module.azure_resource_group_2.location
+}
+
+output "azure_vnet_2" {
+  value = module.azure_vnet_2.output
+}
+output "azure_vnet_subnet_2a" {
+  value = module.azure_subnet_2a.output
+}
+output "azure_vnet_subnet_2b" {
+  value = module.azure_subnet_2b.output
+}
+
+output "azure_workload_2a" {
+  value = module.azure_workload_2a.output
+}
+output "azure_workload_2b" {
+  value = module.azure_workload_2b.output
 }

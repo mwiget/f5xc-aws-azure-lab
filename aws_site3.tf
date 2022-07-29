@@ -25,3 +25,6 @@ module "aws_subnet_3a" {
   ]
 }
 
+output "aws_vpc_3_id" {
+  value = module.aws_vpc_3.aws_vpc_id
+}
