@@ -10,6 +10,7 @@ module "azure_site_2a" {
   f5xc_azure_site_name           = "mw-azure-site-2a"
   f5xc_azure_vnet_resource_group = module.azure_resource_group_2.name
   f5xc_azure_vnet_local          = module.azure_vnet_2.name
+  custom_tag                     = { "site_mesh_group" = "f5xc-aws-azure-lab" }
   f5xc_azure_ce_gw_type          = "single_nic"
   f5xc_azure_az_nodes            = {
     node0 : { f5xc_azure_az = "1", f5xc_azure_vnet_local_subnet = module.azure_subnet_2a.name }
@@ -19,7 +20,7 @@ module "azure_site_2a" {
   f5xc_azure_default_ce_os_version    = true
   f5xc_azure_no_worker_nodes          = true
   f5xc_azure_total_worker_nodes       = 0
-  public_ssh_key                      = "${file("~/.ssh/id_rsa.pub")}"
+  public_ssh_key                      = "${file(var.ssh_public_key_file)}"
 } 
 
 module "azure_site_2b" {
@@ -34,6 +35,7 @@ module "azure_site_2b" {
   f5xc_azure_site_name           = "mw-azure-site-2b"
   f5xc_azure_vnet_resource_group = module.azure_resource_group_2.name
   f5xc_azure_vnet_local          = module.azure_vnet_2.name
+  custom_tag                     = { "site_mesh_group" = "f5xc-aws-azure-lab" }
   f5xc_azure_ce_gw_type          = "single_nic"
   f5xc_azure_az_nodes            = {
     node0 : { f5xc_azure_az = "1", f5xc_azure_vnet_local_subnet = module.azure_subnet_2b.name }
@@ -43,7 +45,7 @@ module "azure_site_2b" {
   f5xc_azure_default_ce_os_version    = true
   f5xc_azure_no_worker_nodes          = true
   f5xc_azure_total_worker_nodes       = 0
-  public_ssh_key                      = "${file("~/.ssh/id_rsa.pub")}"
+  public_ssh_key                      = "${file(var.ssh_public_key_file)}"
 } 
 
 module "site_status_check_2a" {
@@ -103,7 +105,7 @@ module "azure_workload_2a" {
   zone                    = 1
   subnet_id               = module.azure_subnet_2a.id
   username                = "azureuser"
-  ssh_key                 = "${file("~/.ssh/id_rsa.pub")}"
+  ssh_key                 = "${file(var.ssh_public_key_file)}"
   custom_data             = "${filebase64("./workload_custom_data.sh")}"
   resource_group_name     = module.azure_resource_group_2.name
   azure_region            = module.azure_resource_group_2.location
@@ -116,7 +118,7 @@ module "azure_workload_2b" {
   zone                    = 2
   subnet_id               = module.azure_subnet_2b.id
   username                = "azureuser"
-  ssh_key                 = "${file("~/.ssh/id_rsa.pub")}"
+  ssh_key                 = "${file(var.ssh_public_key_file)}"
   custom_data             = "${filebase64("./workload_custom_data.sh")}"
   resource_group_name     = module.azure_resource_group_2.name
   azure_region            = module.azure_resource_group_2.location

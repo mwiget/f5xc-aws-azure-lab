@@ -13,6 +13,7 @@ module "aws_site_3a" {
   f5xc_aws_vpc_total_worker_nodes = 0
   f5xc_aws_ce_gw_type             = "single_nic"
   aws_owner_tag                   = var.owner_tag
+  custom_tag                      = { "site_mesh_group" = "f5xc-aws-azure-lab" }
   f5xc_aws_vpc_az_nodes           = {
     node0 : { 
       f5xc_aws_vpc_id           = module.aws_vpc_3.aws_vpc_id,
@@ -42,6 +43,7 @@ module "aws_site_3b" {
   f5xc_aws_vpc_total_worker_nodes = 0
   f5xc_aws_ce_gw_type             = "single_nic"
   aws_owner_tag                   = var.owner_tag
+  custom_tag                      = { "site_mesh_group" = "f5xc-aws-azure-lab" }
   f5xc_aws_vpc_az_nodes           = {
     node0 : { 
       f5xc_aws_vpc_id           = module.aws_vpc_3.aws_vpc_id,
