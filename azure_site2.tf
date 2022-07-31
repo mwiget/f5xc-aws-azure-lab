@@ -10,7 +10,7 @@ module "azure_site_2a" {
   f5xc_azure_site_name           = "mw-azure-site-2a"
   f5xc_azure_vnet_resource_group = module.azure_resource_group_2.name
   f5xc_azure_vnet_local          = module.azure_vnet_2.name
-  custom_tag                     = { "site_mesh_group" = "f5xc-aws-azure-lab" }
+  custom_tags                    = { "site_mesh_group" = "f5xc-aws-azure-lab" }
   f5xc_azure_ce_gw_type          = "single_nic"
   f5xc_azure_az_nodes            = {
     node0 : { f5xc_azure_az = "1", f5xc_azure_vnet_local_subnet = module.azure_subnet_2a.name }
@@ -35,7 +35,7 @@ module "azure_site_2b" {
   f5xc_azure_site_name           = "mw-azure-site-2b"
   f5xc_azure_vnet_resource_group = module.azure_resource_group_2.name
   f5xc_azure_vnet_local          = module.azure_vnet_2.name
-  custom_tag                     = { "site_mesh_group" = "f5xc-aws-azure-lab" }
+  custom_tags                    = { "site_mesh_group" = "f5xc-aws-azure-lab" }
   f5xc_azure_ce_gw_type          = "single_nic"
   f5xc_azure_az_nodes            = {
     node0 : { f5xc_azure_az = "1", f5xc_azure_vnet_local_subnet = module.azure_subnet_2b.name }
