@@ -97,6 +97,7 @@ module "azure_subnet_2b" {
 }
 
 module "azure_workload_2a" {
+  count = var.enable_site["azure_site_2a"] ? 1 : 0
   source                  = "./modules/azure/virtual_machine"
   name                    = "mw-workload-2a"
   size                    = "Standard_DS1_v2"
@@ -110,6 +111,7 @@ module "azure_workload_2a" {
 }
 
 module "azure_workload_2b" {
+  count = var.enable_site["azure_site_2b"] ? 1 : 0
   source                  = "./modules/azure/virtual_machine"
   name                    = "mw-workload-2b"
   size                    = "Standard_DS1_v2"
@@ -140,8 +142,8 @@ output "azure_vnet_subnet_2b" {
 }
 
 output "azure_workload_2a" {
-  value = module.azure_workload_2a.output
+  value = length(module.azure_workload_2a) > 0 ? module.azure_workload_2a.output : null
 }
 output "azure_workload_2b" {
-  value = module.azure_workload_2b.output
+  value = length(module.azure_workload_2b) > 0 ? module.azure_workload_2b.output : null
 }

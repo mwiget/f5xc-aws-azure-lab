@@ -23,6 +23,26 @@ variable "f5xc_api_key" {
   default = ""
 }
 
+variable "azure_subscription_id" {
+  type = string
+  default = ""
+}
+
+variable "azure_client_id" {
+  type = string
+  default = ""
+}
+
+variable "azure_client_secret" {
+  type = string
+  default = ""
+}
+
+variable "azure_tenant_id" {
+  type = string
+  default = ""
+}
+
 variable "owner_tag" {
   type = string
   default = "owner unknown"

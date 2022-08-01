@@ -84,6 +84,7 @@ module "site_status_check_3b" {
 }
 
 module "aws_workload_3a" {
+  count = var.enable_site["aws_site_3a"] ? 1 : 0
   source                = "./modules/aws/ec2ubuntu"
   providers         = { aws = aws.usw2 }
   aws_ec2_instance_name = "mw-aws-site-3a"
@@ -98,6 +99,7 @@ module "aws_workload_3a" {
 }
 
 module "aws_workload_3b" {
+  count = var.enable_site["aws_site_3b"] ? 1 : 0
   source                = "./modules/aws/ec2ubuntu"
   providers         = { aws = aws.usw2 }
   aws_ec2_instance_type = "t3.micro"
@@ -178,15 +180,15 @@ output "aws_subnet_3b" {
 }
 
 output aws_workload_3a_private_ip {
-    value = module.aws_workload_3a.private_ip
+  value = length(module.aws_workload_3a) > 0 ? module.aws_workload_3a.private_ip : null
 }
 output aws_workload_3a_public_ip {
-    value = module.aws_workload_3a.public_ip
+  value = length(module.aws_workload_3a) > 0 ? module.aws_workload_3a.public_ip : null
 }
 output aws_workload_3b_private_ip {
-    value = module.aws_workload_3b.private_ip
+  value = length(module.aws_workload_3b) > 0 ? module.aws_workload_3b.private_ip : null
 }
 output aws_workload_3b_public_ip {
-    value = module.aws_workload_3b.public_ip
+  value = length(module.aws_workload_3b) > 0 ? module.aws_workload_3b.public_ip : null
 }
 

@@ -182,15 +182,15 @@ output "aws_subnet_4b" {
 }
 
 output aws_workload_4a_private_ip {
-    value = module.aws_workload_4a.private_ip
+  value = length(module.aws_workload_4a) > 0 ? module.aws_workload_4a.private_ip : null
 }
 output aws_workload_4a_public_ip {
-    value = module.aws_workload_4a.public_ip
+  value = length(module.aws_workload_4a) > 0 ? module.aws_workload_4a.public_ip : null
 }
 output aws_workload_4b_private_ip {
-    value = module.aws_workload_4b.private_ip
+  value = length(module.aws_workload_4b) > 0 ? module.aws_workload_4b.private_ip : null
 }
 output aws_workload_4b_public_ip {
-    value = module.aws_workload_4b.public_ip
+  value = length(module.aws_workload_4b) > 0 ? module.aws_workload_4b.public_ip : null
 }
 
