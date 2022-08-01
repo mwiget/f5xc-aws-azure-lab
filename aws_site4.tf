@@ -9,15 +9,15 @@ module "aws_site_4a" {
   f5xc_aws_cred                   = "mw-aws-f5"
   f5xc_aws_vpc_site_name          = "mw-aws-site-4a"
   f5xc_aws_vpc_name_tag           = ""
-  f5xc_aws_vpc_id                 = module.aws_vpc_4.aws_vpc_id
+  f5xc_aws_vpc_id                 = module.aws_vpc_4a.aws_vpc_id
   f5xc_aws_vpc_total_worker_nodes = 0
   f5xc_aws_ce_gw_type             = "single_nic"
   aws_owner_tag                   = var.owner_tag
   custom_tags                     = { "site_mesh_group" = "f5xc-aws-azure-lab" }
   f5xc_aws_vpc_az_nodes           = {
     node0 : { 
-      f5xc_aws_vpc_id           = module.aws_vpc_4.aws_vpc_id,
-      f5xc_aws_vpc_local_subnet = module.aws_subnet_4.aws_subnet_id[0], 
+      f5xc_aws_vpc_id           = module.aws_vpc_4a.aws_vpc_id,
+      f5xc_aws_vpc_local_subnet = module.aws_subnet_4a.aws_subnet_id[0], 
       f5xc_aws_vpc_az_name      = "eu-north-1a" }
   }
   f5xc_aws_default_ce_os_version       = true
@@ -39,15 +39,15 @@ module "aws_site_4b" {
   f5xc_aws_cred                   = "mw-aws-f5"
   f5xc_aws_vpc_site_name          = "mw-aws-site-4b"
   f5xc_aws_vpc_name_tag           = ""
-  f5xc_aws_vpc_id                 = module.aws_vpc_4.aws_vpc_id
+  f5xc_aws_vpc_id                 = module.aws_vpc_4b.aws_vpc_id
   f5xc_aws_vpc_total_worker_nodes = 0
   f5xc_aws_ce_gw_type             = "single_nic"
   aws_owner_tag                   = var.owner_tag
   custom_tags                     = { "site_mesh_group" = "f5xc-aws-azure-lab" }
   f5xc_aws_vpc_az_nodes           = {
     node0 : { 
-      f5xc_aws_vpc_id           = module.aws_vpc_4.aws_vpc_id,
-      f5xc_aws_vpc_local_subnet = module.aws_subnet_4.aws_subnet_id[1], 
+      f5xc_aws_vpc_id           = module.aws_vpc_4b.aws_vpc_id,
+      f5xc_aws_vpc_local_subnet = module.aws_subnet_4b.aws_subnet_id[0], 
       f5xc_aws_vpc_az_name      = "eu-north-1b" }
   }
   f5xc_aws_default_ce_os_version       = true
@@ -83,8 +83,8 @@ module "aws_workload_4a" {
   aws_ec2_instance_name = "mw-aws-site-4a"
   aws_ec2_instance_type = "t3.micro"
   aws_region            = "eu-north-1"
-  aws_vpc_id            = module.aws_vpc_4.aws_vpc_id
-  aws_subnet_id         = module.aws_subnet_4.aws_subnet_id[0]
+  aws_vpc_id            = module.aws_vpc_4a.aws_vpc_id
+  aws_subnet_id         = module.aws_subnet_4a.aws_subnet_id[0]
   aws_owner_tag         = var.owner_tag
   ssh_public_key        = file(var.ssh_public_key_file)
   user_data             = file("./workload_custom_data.sh")
@@ -97,17 +97,17 @@ module "aws_workload_4b" {
   aws_ec2_instance_name = "mw-aws-site-4b"
   aws_region            = "eu-north-1"
   aws_owner_tag         = var.owner_tag
-  aws_vpc_id            = module.aws_vpc_4.aws_vpc_id
-  aws_subnet_id         = module.aws_subnet_4.aws_subnet_id[1]
+  aws_vpc_id            = module.aws_vpc_4b.aws_vpc_id
+  aws_subnet_id         = module.aws_subnet_4b.aws_subnet_id[0]
   ssh_public_key        = file(var.ssh_public_key_file)
   user_data             = file("./workload_custom_data.sh")
   allow_cidr_blocks     = [ "100.0.0.0/8" ]
 }
 
-module "aws_vpc_4" {
+module "aws_vpc_4a" {
   source               = "./modules/aws/vpc"
-  aws_vpc_cidr_block   = "100.64.16.0/22"
-  aws_vpc_name         = "mw-aws-site-4"
+  aws_vpc_cidr_block   = "100.64.16.0/24"
+  aws_vpc_name         = "mw-aws-site-4a"
   enable_dns_support   = "true"
   enable_dns_hostnames = "true"
   enable_classiclink   = "false"
@@ -116,27 +116,54 @@ module "aws_vpc_4" {
   aws_owner_tag        = var.owner_tag
 }
 
-module "aws_subnet_4" {
+module "aws_vpc_4b" {
+  source               = "./modules/aws/vpc"
+  aws_vpc_cidr_block   = "100.64.16.0/24"
+  aws_vpc_name         = "mw-aws-site-4b"
+  enable_dns_support   = "true"
+  enable_dns_hostnames = "true"
+  enable_classiclink   = "false"
+  instance_tenancy     = "default"
+  aws_region           = "eu-north-1"
+  aws_owner_tag        = var.owner_tag
+}
+
+module "aws_subnet_4a" {
   source               = "./modules/aws/subnet"
   aws_region           = "eu-north-1"
-  aws_vpc_id                  = module.aws_vpc_4.aws_vpc_id
+  aws_vpc_id           = module.aws_vpc_4a.aws_vpc_id
   aws_vpc_subnets      = [
     { 
       cidr_block = "100.64.16.0/24", availability_zone = "eu-north-1a",
-      map_public_ip_on_launch = "true", custom_tags = { "Name" = "mw-aws-site-4" }
-    },
-    { 
-      cidr_block = "100.64.17.0/24", availability_zone = "eu-north-1b",
-      map_public_ip_on_launch = "true", custom_tags = { "Name" = "mw-aws-site-4" }
+      map_public_ip_on_launch = "true", custom_tags = { "Name" = "mw-aws-site-4a" }
     }
   ]
 }
 
-output "aws_vpc_4_id" {
-  value = module.aws_vpc_4.aws_vpc_id
+module "aws_subnet_4b" {
+  source               = "./modules/aws/subnet"
+  aws_region           = "eu-north-1"
+  aws_vpc_id           = module.aws_vpc_4b.aws_vpc_id
+  aws_vpc_subnets      = [
+    { 
+      cidr_block = "100.64.16.0/24", availability_zone = "eu-north-1b",
+      map_public_ip_on_launch = "true", custom_tags = { "Name" = "mw-aws-site-4b" }
+    }
+  ]
 }
-output "aws_subnet_4" {
-  value = module.aws_subnet_4.aws_subnet_id
+
+output "aws_vpc_4a_id" {
+  value = module.aws_vpc_4a.aws_vpc_id
+}
+output "aws_subnet_4a" {
+  value = module.aws_subnet_4a.aws_subnet_id
+}
+
+output "aws_vpc_4b_id" {
+  value = module.aws_vpc_4b.aws_vpc_id
+}
+output "aws_subnet_4b" {
+  value = module.aws_subnet_4b.aws_subnet_id
 }
 
 output aws_workload_4a_private_ip {
