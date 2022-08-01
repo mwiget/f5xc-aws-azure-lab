@@ -1,10 +1,14 @@
+provider "aws" {
+  alias = "eun1"
+  region = "eu-north-1"
+}
+
 module "aws_site_4a" {
+  count = var.enable_site["aws_site_4a"] ? 1 : 0
   source                          = "./modules/f5xc/site/aws/vpc"
-  f5xc_api_p12_file              = "cert/playground.staging.api-creds.p12"
-  f5xc_api_ca_cert               = "cert/public_server_ca.crt"
-  f5xc_api_url                   = "https://playground.staging.volterra.us/api"
-  f5xc_namespace                 = "system"
-  f5xc_tenant                    = "playground-wtppvaog"
+  providers                       = { volterra = volterra.default }
+  f5xc_namespace                  = "system"
+  f5xc_tenant                     = "playground-wtppvaog"
   f5xc_aws_region                 = "eu-north-1"
   f5xc_aws_cred                   = "mw-aws-f5"
   f5xc_aws_vpc_site_name          = "mw-aws-site-4a"
@@ -22,19 +26,20 @@ module "aws_site_4a" {
   }
   f5xc_aws_default_ce_os_version       = true
   f5xc_aws_default_ce_sw_version       = true
-  f5xc_aws_vpc_no_worker_nodes         = false
+  f5xc_aws_vpc_no_worker_nodes         = true
   f5xc_aws_vpc_use_http_https_port     = true
   f5xc_aws_vpc_use_http_https_port_sli = true
   public_ssh_key                       = "${file(var.ssh_public_key_file)}"
+
+  depends_on = [ module.aws_subnet_4a, module.aws_vpc_4a ]
 }
 
 module "aws_site_4b" {
+  count = var.enable_site["aws_site_4b"] ? 1 : 0
   source                          = "./modules/f5xc/site/aws/vpc"
-  f5xc_api_p12_file              = "cert/playground.staging.api-creds.p12"
-  f5xc_api_ca_cert               = "cert/public_server_ca.crt"
-  f5xc_api_url                   = "https://playground.staging.volterra.us/api"
-  f5xc_namespace                 = "system"
-  f5xc_tenant                    = "playground-wtppvaog"
+  providers                       = { volterra = volterra.default }
+  f5xc_namespace                  = "system"
+  f5xc_tenant                     = "playground-wtppvaog"
   f5xc_aws_region                 = "eu-north-1"
   f5xc_aws_cred                   = "mw-aws-f5"
   f5xc_aws_vpc_site_name          = "mw-aws-site-4b"
@@ -52,13 +57,16 @@ module "aws_site_4b" {
   }
   f5xc_aws_default_ce_os_version       = true
   f5xc_aws_default_ce_sw_version       = true
-  f5xc_aws_vpc_no_worker_nodes         = false
+  f5xc_aws_vpc_no_worker_nodes         = true
   f5xc_aws_vpc_use_http_https_port     = true
   f5xc_aws_vpc_use_http_https_port_sli = true
   public_ssh_key                       = "${file(var.ssh_public_key_file)}"
+
+  depends_on = [ module.aws_subnet_4b, module.aws_vpc_4b ]
 }
 
 module "site_status_check_4a" {
+  count = var.enable_site["aws_site_4a"] ? 1 : 0
   source            = "./modules/f5xc/status/site"
   f5xc_api_url      = "https://playground.staging.volterra.us/api"
   f5xc_api_token    = var.f5xc_api_token
@@ -69,6 +77,7 @@ module "site_status_check_4a" {
 }
 
 module "site_status_check_4b" {
+  count = var.enable_site["aws_site_4b"] ? 1 : 0
   source            = "./modules/f5xc/status/site"
   f5xc_api_url      = "https://playground.staging.volterra.us/api"
   f5xc_api_token    = var.f5xc_api_token
@@ -80,6 +89,7 @@ module "site_status_check_4b" {
 
 module "aws_workload_4a" {
   source                = "./modules/aws/ec2ubuntu"
+  providers         = { aws = aws.eun1 }
   aws_ec2_instance_name = "mw-aws-site-4a"
   aws_ec2_instance_type = "t3.micro"
   aws_region            = "eu-north-1"
@@ -93,6 +103,7 @@ module "aws_workload_4a" {
 
 module "aws_workload_4b" {
   source                = "./modules/aws/ec2ubuntu"
+  providers         = { aws = aws.eun1 }
   aws_ec2_instance_type = "t3.micro"
   aws_ec2_instance_name = "mw-aws-site-4b"
   aws_region            = "eu-north-1"
@@ -106,6 +117,7 @@ module "aws_workload_4b" {
 
 module "aws_vpc_4a" {
   source               = "./modules/aws/vpc"
+  providers         = { aws = aws.eun1 }
   aws_vpc_cidr_block   = "100.64.16.0/24"
   aws_vpc_name         = "mw-aws-site-4a"
   enable_dns_support   = "true"
@@ -118,6 +130,7 @@ module "aws_vpc_4a" {
 
 module "aws_vpc_4b" {
   source               = "./modules/aws/vpc"
+  providers         = { aws = aws.eun1 }
   aws_vpc_cidr_block   = "100.64.16.0/24"
   aws_vpc_name         = "mw-aws-site-4b"
   enable_dns_support   = "true"
@@ -130,6 +143,7 @@ module "aws_vpc_4b" {
 
 module "aws_subnet_4a" {
   source               = "./modules/aws/subnet"
+  providers         = { aws = aws.eun1 }
   aws_region           = "eu-north-1"
   aws_vpc_id           = module.aws_vpc_4a.aws_vpc_id
   aws_vpc_subnets      = [
@@ -142,6 +156,7 @@ module "aws_subnet_4a" {
 
 module "aws_subnet_4b" {
   source               = "./modules/aws/subnet"
+  providers         = { aws = aws.eun1 }
   aws_region           = "eu-north-1"
   aws_vpc_id           = module.aws_vpc_4b.aws_vpc_id
   aws_vpc_subnets      = [

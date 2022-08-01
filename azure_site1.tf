@@ -1,8 +1,6 @@
 module "azure_site_1a" {
+  count = var.enable_site["azure_site_1a"] ? 1 : 0
   source                         = "./modules/f5xc/site/azure"
-  f5xc_api_p12_file              = "cert/playground.staging.api-creds.p12"
-  f5xc_api_ca_cert               = "cert/public_server_ca.crt"
-  f5xc_api_url                   = "https://playground.staging.volterra.us/api"
   f5xc_namespace                 = "system"
   f5xc_tenant                    = "playground-wtppvaog"
   f5xc_azure_cred                = "sun-az-creds"
@@ -24,10 +22,8 @@ module "azure_site_1a" {
 } 
 
 module "azure_site_1b" {
+  count = var.enable_site["azure_site_1b"] ? 1 : 0
   source                         = "./modules/f5xc/site/azure"
-  f5xc_api_p12_file              = "cert/playground.staging.api-creds.p12"
-  f5xc_api_ca_cert               = "cert/public_server_ca.crt"
-  f5xc_api_url                   = "https://playground.staging.volterra.us/api"
   f5xc_namespace                 = "system"
   f5xc_tenant                    = "playground-wtppvaog"
   f5xc_azure_cred                = "sun-az-creds"
@@ -49,6 +45,7 @@ module "azure_site_1b" {
 } 
 
 module "site_status_check_1a" {
+  count = var.enable_site["azure_site_1a"] ? 1 : 0
   source            = "./modules/f5xc/status/site"
   f5xc_api_url      = "https://playground.staging.volterra.us/api"
   f5xc_api_token    = var.f5xc_api_token
@@ -58,6 +55,7 @@ module "site_status_check_1a" {
   depends_on        = [module.azure_site_1a]
 }
 module "site_status_check_1b" {
+  count = var.enable_site["azure_site_1b"] ? 1 : 0
   source            = "./modules/f5xc/status/site"
   f5xc_api_url      = "https://playground.staging.volterra.us/api"
   f5xc_api_token    = var.f5xc_api_token

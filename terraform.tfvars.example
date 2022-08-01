@@ -1,1 +1,15 @@
-owner_tag = "user@domain"
+f5xc_api_p12_file = "cert/playground.staging.api-creds.p12"
+f5xc_api_ca_cert  = "cert/public_server_ca.crt"
+f5xc_api_url      = "https://playground.staging.volterra.us/api"
+owner_tag         = "user@domain"
+
+enable_site       = {
+  "azure_site_1a" = true
+  "azure_site_1b" = true
+  "azure_site_2a" = true
+  "azure_site_2b" = true
+  "aws_site_3a" = true
+  "aws_site_3b" = true
+  "aws_site_4a" = true
+  "aws_site_4b" = true
+}
