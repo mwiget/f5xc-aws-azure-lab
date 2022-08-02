@@ -7,11 +7,11 @@ module "azure_site_1a" {
   f5xc_azure_region              = "westus2"
   f5xc_azure_site_name           = "mw-azure-site-1a"
   f5xc_azure_vnet_resource_group = module.azure_resource_group_1.name
-  f5xc_azure_vnet_local          = module.azure_vnet_1.name
+  f5xc_azure_vnet                 = module.azure_vnet_1a.name
   custom_tags                     = { "site_mesh_group" = "f5xc-aws-azure-lab" }
-  f5xc_azure_ce_gw_type          = "single_nic"
+  f5xc_azure_ce_gw_type          = "multi_nic"
   f5xc_azure_az_nodes            = {
-    node0 : { f5xc_azure_az = "1", f5xc_azure_vnet_local_subnet = module.azure_subnet_1a.name }
+    node0 : { f5xc_azure_az = "1", f5xc_azure_vnet_outside_subnet = module.azure_outside_subnet_1a.name, f5xc_azure_vnet_inside_subnet = module.azure_inside_subnet_1a.name }
   }
   f5xc_azure_default_blocked_services = false
   f5xc_azure_default_ce_sw_version    = true
@@ -30,11 +30,11 @@ module "azure_site_1b" {
   f5xc_azure_region              = "westus2"
   f5xc_azure_site_name           = "mw-azure-site-1b"
   f5xc_azure_vnet_resource_group = module.azure_resource_group_1.name
-  f5xc_azure_vnet_local          = module.azure_vnet_1.name
+  f5xc_azure_vnet                = module.azure_vnet_1b.name
   custom_tags                     = { "site_mesh_group" = "f5xc-aws-azure-lab" }
-  f5xc_azure_ce_gw_type          = "single_nic"
+  f5xc_azure_ce_gw_type          = "multi_nic"
   f5xc_azure_az_nodes            = {
-    node0 : { f5xc_azure_az = "2", f5xc_azure_vnet_local_subnet = module.azure_subnet_1b.name }
+    node0 : { f5xc_azure_az = "2", f5xc_azure_vnet_outside_subnet = module.azure_outside_subnet_1b.name, f5xc_azure_vnet_inside_subnet = module.azure_inside_subnet_1b.name }
   }
   f5xc_azure_default_blocked_services = false
   f5xc_azure_default_ce_sw_version    = true
@@ -71,27 +71,51 @@ module "azure_resource_group_1" {
   azure_region        = "westus2"
 }
 
-module "azure_vnet_1" {
+module "azure_vnet_1a" {
   source                  = "./modules/azure/virtual_network"
-  azure_vnet_name         = "mw-vnet1"
+  azure_vnet_name         = "mw-vnet1a"
   azure_vnet_primary_ipv4 = "100.64.16.0/22"
   resource_group_name     = module.azure_resource_group_1.name
   azure_region            = module.azure_resource_group_1.location
 }
 
-module "azure_subnet_1a" {
-  name                    = "mw-subnet-1a"
+module "azure_vnet_1b" {
+  source                  = "./modules/azure/virtual_network"
+  azure_vnet_name         = "mw-vnet1b"
+  azure_vnet_primary_ipv4 = "100.64.16.0/22"
+  resource_group_name     = module.azure_resource_group_1.name
+  azure_region            = module.azure_resource_group_1.location
+}
+
+module "azure_outside_subnet_1a" {
+  name                    = "mw-outside-subnet-1a"
   source                  = "./modules/azure/subnet"
   address_prefix          = "100.64.16.0/24"
-  azure_vnet_name         = module.azure_vnet_1.name
+  azure_vnet_name         = module.azure_vnet_1a.name
   resource_group_name     = module.azure_resource_group_1.name
 }
 
-module "azure_subnet_1b" {
-  name                    = "mw-subnet-1b"
+module "azure_inside_subnet_1a" {
+  name                    = "mw-inside-subnet-1a"
   source                  = "./modules/azure/subnet"
   address_prefix          = "100.64.17.0/24"
-  azure_vnet_name         = module.azure_vnet_1.name
+  azure_vnet_name         = module.azure_vnet_1a.name
+  resource_group_name     = module.azure_resource_group_1.name
+}
+
+module "azure_outside_subnet_1b" {
+  name                    = "mw-outside-subnet-1b"
+  source                  = "./modules/azure/subnet"
+  address_prefix          = "100.64.16.0/24"
+  azure_vnet_name         = module.azure_vnet_1b.name
+  resource_group_name     = module.azure_resource_group_1.name
+}
+
+module "azure_inside_subnet_1b" {
+  name                    = "mw-inside-subnet-1b"
+  source                  = "./modules/azure/subnet"
+  address_prefix          = "100.64.17.0/24"
+  azure_vnet_name         = module.azure_vnet_1b.name
   resource_group_name     = module.azure_resource_group_1.name
 }
 
@@ -101,7 +125,7 @@ module "azure_workload_1a" {
   name                    = "mw-workload-1a"
   size                    = "Standard_DS1_v2"
   zone                    = 1
-  subnet_id               = module.azure_subnet_1a.id
+  subnet_id               = module.azure_inside_subnet_1a.id
   username                = "azureuser"
   ssh_key                 = "${file(var.ssh_public_key_file)}"
   custom_data             = "${filebase64("./workload_custom_data.sh")}"
@@ -115,7 +139,7 @@ module "azure_workload_1b" {
   name                    = "mw-workload-1b"
   size                    = "Standard_DS1_v2"
   zone                    = 2
-  subnet_id               = module.azure_subnet_1b.id
+  subnet_id               = module.azure_inside_subnet_1b.id
   username                = "azureuser"
   ssh_key                 = "${file(var.ssh_public_key_file)}"
   custom_data             = "${filebase64("./workload_custom_data.sh")}"
@@ -130,14 +154,23 @@ output "azure_resource_group_1_location" {
   value = module.azure_resource_group_1.location
 }
 
-output "azure_vnet_1" {
-  value = module.azure_vnet_1.output
+output "azure_vnet_1a" {
+  value = module.azure_vnet_1a.output
 }
-output "azure_vnet_subnet_1a" {
-  value = module.azure_subnet_1a.output
+output "azure_vnet_1b" {
+  value = module.azure_vnet_1b.output
 }
-output "azure_vnet_subnet_1b" {
-  value = module.azure_subnet_1b.output
+output "azure_vnet_outside_subnet_1a" {
+  value = module.azure_outside_subnet_1a.output
+}
+output "azure_vnet_inside_subnet_1a" {
+  value = module.azure_inside_subnet_1a.output
+}
+output "azure_vnet_outside_subnet_1b" {
+  value = module.azure_outside_subnet_1b.output
+}
+output "azure_vnet_inside_subnet_1b" {
+  value = module.azure_inside_subnet_1b.output
 }
 
 output "azure_workload_1a" {
