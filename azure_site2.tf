@@ -142,8 +142,8 @@ output "azure_vnet_subnet_2b" {
 }
 
 output "azure_workload_2a" {
-  value = length(module.azure_workload_2a) > 0 ? module.azure_workload_2a.output : null
+  value = toset(module.azure_workload_2a[*].output)
 }
 output "azure_workload_2b" {
-  value = length(module.azure_workload_2b) > 0 ? module.azure_workload_2b.output : null
+  value = toset(module.azure_workload_2b[*].output)
 }

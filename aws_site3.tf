@@ -180,15 +180,15 @@ output "aws_subnet_3b" {
 }
 
 output aws_workload_3a_private_ip {
-  value = length(module.aws_workload_3a) > 0 ? module.aws_workload_3a.private_ip : null
+  value = toset(module.aws_workload_3a[*].private_ip)
 }
 output aws_workload_3a_public_ip {
-  value = length(module.aws_workload_3a) > 0 ? module.aws_workload_3a.public_ip : null
+  value = toset(module.aws_workload_3a[*].public_ip)
 }
 output aws_workload_3b_private_ip {
-  value = length(module.aws_workload_3b) > 0 ? module.aws_workload_3b.private_ip : null
+  value = toset(module.aws_workload_3b[*].private_ip)
 }
 output aws_workload_3b_public_ip {
-  value = length(module.aws_workload_3b) > 0 ? module.aws_workload_3b.public_ip : null
+  value = toset(module.aws_workload_3b[*].public_ip)
 }
 
