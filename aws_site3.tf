@@ -116,7 +116,7 @@ module "aws_workload_3b" {
 module "aws_vpc_3a" {
   source               = "./modules/aws/vpc"
   providers         = { aws = aws.usw2 }
-  aws_vpc_cidr_block   = "100.64.16.0/24"
+  aws_vpc_cidr_block   = "100.64.16.0/22"
   aws_vpc_name         = "mw-aws-site-3a"
   enable_dns_support   = "true"
   enable_dns_hostnames = "true"
@@ -129,7 +129,7 @@ module "aws_vpc_3a" {
 module "aws_vpc_3b" {
   source               = "./modules/aws/vpc"
   providers         = { aws = aws.usw2 }
-  aws_vpc_cidr_block   = "100.64.16.0/24"
+  aws_vpc_cidr_block   = "100.64.16.0/22"
   aws_vpc_name         = "mw-aws-site-3b"
   enable_dns_support   = "true"
   enable_dns_hostnames = "true"

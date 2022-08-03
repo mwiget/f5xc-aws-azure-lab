@@ -147,6 +147,15 @@ module "azure_workload_2b" {
   azure_region            = module.azure_resource_group_2.location
 }
 
+data "azurerm_network_interface" "sli-2a" {
+  name                = "master-0-sli"
+  resource_group_name = "mw-azure-site-2a-rg"
+}
+data "azurerm_network_interface" "sli-2b" {
+  name                = "master-0-sli"
+  resource_group_name = "mw-azure-site-2b-rg"
+}
+
 output "azure_resource_group_2_name" {
   value = module.azure_resource_group_2.name
 }
@@ -178,4 +187,11 @@ output "azure_workload_2a" {
 }
 output "azure_workload_2b" {
   value = toset(module.azure_workload_2b[*].output)
+}
+
+output "site_2a_sli_ip" {
+  value = data.azurerm_network_interface.sli-2a.private_ip_address
+}
+output "site_2b_sli_ip" {
+  value = data.azurerm_network_interface.sli-2b.private_ip_address
 }

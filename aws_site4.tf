@@ -118,7 +118,7 @@ module "aws_workload_4b" {
 module "aws_vpc_4a" {
   source               = "./modules/aws/vpc"
   providers         = { aws = aws.eun1 }
-  aws_vpc_cidr_block   = "100.64.16.0/24"
+  aws_vpc_cidr_block   = "100.64.16.0/22"
   aws_vpc_name         = "mw-aws-site-4a"
   enable_dns_support   = "true"
   enable_dns_hostnames = "true"
@@ -131,7 +131,7 @@ module "aws_vpc_4a" {
 module "aws_vpc_4b" {
   source               = "./modules/aws/vpc"
   providers         = { aws = aws.eun1 }
-  aws_vpc_cidr_block   = "100.64.16.0/24"
+  aws_vpc_cidr_block   = "100.64.16.0/22"
   aws_vpc_name         = "mw-aws-site-4b"
   enable_dns_support   = "true"
   enable_dns_hostnames = "true"

@@ -147,6 +147,55 @@ module "azure_workload_1b" {
   azure_region            = module.azure_resource_group_1.location
 }
 
+resource "azurerm_route_table" "vip1a" {
+  name                = "workload_rt1a"
+  location            = "westus2"
+  resource_group_name = module.azure_resource_group_1.name
+}
+
+resource "azurerm_route_table" "vip1b" {
+  name                = "workload_rt1b"
+  location            = "westus2"
+  resource_group_name = module.azure_resource_group_1.name
+}
+
+resource "azurerm_subnet_route_table_association" "vip1a" {
+  subnet_id      = module.azure_inside_subnet_1a.id
+  route_table_id = azurerm_route_table.vip1a.id
+}
+
+resource "azurerm_subnet_route_table_association" "vip1b" {
+  subnet_id      = module.azure_inside_subnet_1b.id
+  route_table_id = azurerm_route_table.vip1b.id
+}
+
+resource "azurerm_route" "vip1a" {
+  name                    = "acceptVIP"
+  resource_group_name     = module.azure_resource_group_1.name
+  route_table_name        = azurerm_route_table.vip1a.name
+  address_prefix          = "100.64.15.0/24"
+  next_hop_type           = "VirtualAppliance"
+  next_hop_in_ip_address  = data.azurerm_network_interface.sli-1a.private_ip_address
+}
+
+resource "azurerm_route" "vip1b" {
+  name                    = "acceptVIP"
+  resource_group_name     = module.azure_resource_group_1.name
+  route_table_name        = azurerm_route_table.vip1b.name
+  address_prefix          = "100.64.15.0/24"
+  next_hop_type           = "VirtualAppliance"
+  next_hop_in_ip_address  = data.azurerm_network_interface.sli-1b.private_ip_address
+}
+
+data "azurerm_network_interface" "sli-1a" {
+  name                = "master-0-sli"
+  resource_group_name = "mw-azure-site-1a-rg"
+}
+data "azurerm_network_interface" "sli-1b" {
+  name                = "master-0-sli"
+  resource_group_name = "mw-azure-site-1b-rg"
+}
+
 output "azure_resource_group_1_name" {
   value = module.azure_resource_group_1.name
 }
@@ -178,4 +227,11 @@ output "azure_workload_1a" {
 }
 output "azure_workload_1b" {
   value = toset(module.azure_workload_1b[*].output)
+}
+
+output "site_1a_sli_ip" {
+  value = data.azurerm_network_interface.sli-1a.private_ip_address
+}
+output "site_1b_sli_ip" {
+  value = data.azurerm_network_interface.sli-1b.private_ip_address
 }
