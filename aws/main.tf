@@ -1,5 +1,5 @@
 module "vpc" {
-  source                = "../modules/aws/vpc"
+  source                = "../mymodules/aws/vpc"
   aws_vpc_cidr_block    = var.vpc_cidr_block
   aws_vpc_name          = var.name
   enable_dns_support    = "true"
@@ -11,20 +11,20 @@ module "vpc" {
 }
 
 module "subnet" {
-  source                = "../modules/aws/subnet"
+  source                = "../mymodules/aws/subnet"
   aws_vpc_id           = module.vpc.aws_vpc_id
   aws_vpc_subnets      = [
     { 
       cidr_block = var.outside_subnet_cidr_block, availability_zone = var.aws_az_name,
-      map_public_ip_on_launch = "true", custom_tags = { "Name" = var.name }
+      map_public_ip_on_launch = "true", custom_tags = { "Name" = "${var.name}-outside" }
     },
     { 
       cidr_block = var.inside_subnet_cidr_block, availability_zone = var.aws_az_name,
-      map_public_ip_on_launch = "true", custom_tags = { "Name" = var.name }
+      map_public_ip_on_launch = "false", custom_tags = { "Name" = "${var.name}-inside" }
     },
     { 
       cidr_block = var.workload_subnet_cidr_block, availability_zone = var.aws_az_name,
-      map_public_ip_on_launch = "true", custom_tags = { "Name" = var.name }
+      map_public_ip_on_launch = "true", custom_tags = { "Name" = "${var.name}-workload" }
     }
   ]
 }
