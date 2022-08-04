@@ -48,21 +48,3 @@ variable "owner_tag" {
   default = "owner unknown"
 }
 
-variable "ssh_public_key_file" {
-  type = string
-  default = "~/.ssh/id_rsa.pub"
-}
-
-variable "enable_site" {
-  type = map
-  default = {
-    "azure_site_1a" = true
-    "azure_site_1b" = true
-    "azure_site_2a" = true
-    "azure_site_2b" = true
-    "aws_site_3a" = true
-    "aws_site_3b" = true
-    "aws_site_4a" = true
-    "aws_site_4b" = true
-  }
-}

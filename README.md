@@ -2,6 +2,11 @@
 
 
 ```
+$ export TF_VAR_f5xc_api_token=..............
+```
+
+
+```
 git submodule update --init --recursive
 ```
 
