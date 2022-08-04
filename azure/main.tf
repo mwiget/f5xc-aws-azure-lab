@@ -136,17 +136,17 @@ output "workload" {
   value = module.workload.output
 }
 
-output "site_1a_sli_private_ip" {
+output "sli_private_ip" {
   value = data.azurerm_network_interface.sli.private_ip_address
   depends_on        = [module.site_status_check]
 }
 
-output "site_1a_slo_private_ip" {
+output "slo_private_ip" {
   value = data.azurerm_network_interface.slo.private_ip_address
   depends_on        = [module.site_status_check]
 }
 
-output "site_1a_slo_public_ip" {
+output "slo_public_ip" {
   value = data.azurerm_public_ip.pib.ip_address
   depends_on        = [module.site_status_check]
 }

@@ -83,6 +83,27 @@ module "site_status_check" {
   depends_on        = [module.site]
 }
 
+data "aws_network_interface" "slo" {
+  filter { 
+    name    = "tag:ves-io-site-name"
+    values  = [ var.name ]
+  }
+  filter { 
+    name    = "tag:ves.io/interface-type"
+    values  = [ "site-local-outside" ]
+  }
+}
+
+data "aws_network_interface" "sli" {
+  filter { 
+    name    = "tag:ves-io-site-name"
+    values  = [ var.name ]
+  }
+  filter { 
+    name    = "tag:ves.io/interface-type"
+    values  = [ "site-local-inside" ]
+  }
+}
 
 output "aws_vpc_id" {
   value = module.vpc.aws_vpc_id
@@ -98,3 +119,17 @@ output aws_workload_private_ip {
 output aws_workload_public_ip {
   value = module.workload.public_ip
 }
+
+output "sli_private_ip" {
+  value = data.aws_network_interface.sli.private_ip
+}
+output "slo_private_ip" {
+  value = data.aws_network_interface.slo.private_ip
+}
+output "slo_public_ip" {
+  value = data.aws_network_interface.slo.association[0]["public_ip"]
+}
+
+#output "test" {
+#  value = module.subnet.aws_subnet_id[0]
+#}
