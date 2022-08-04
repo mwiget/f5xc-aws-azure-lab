@@ -31,6 +31,10 @@ variable "f5xc_azure_creds" {
   type = string
 }
 
+variable "f5xc_aws_cred" {
+  type = string
+}
+
 variable "azure_subscription_id" {
   type = string
   default = ""

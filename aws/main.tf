@@ -43,7 +43,7 @@ module "workload" {
 }
 
 module "site" {
-  source                          = "../modules/f5xc/site/aws/vpc"
+  source                          = "../mymodules/f5xc/site/aws/vpc"
   f5xc_namespace                  = "system"
   f5xc_tenant                     = var.f5xc_tenant
   f5xc_aws_region                 = var.aws_region
@@ -57,9 +57,12 @@ module "site" {
   custom_tags                     = { "site_mesh_group" = var.site_mesh_group }
   f5xc_aws_vpc_az_nodes           = {
     node0 : { 
-      f5xc_aws_vpc_id           = module.aws_vpc_3a.aws_vpc_id,
-      f5xc_aws_vpc_local_subnet = module.aws_subnet_3a.aws_subnet_id[0], 
-      f5xc_aws_vpc_az_name      = "us-west-2a" }
+      f5xc_aws_vpc_id               = module.vpc.aws_vpc_id,
+      f5xc_aws_vpc_outside_subnet   = module.subnet.aws_subnet_id[0], 
+      f5xc_aws_vpc_inside_subnet    = module.subnet.aws_subnet_id[1], 
+      f5xc_aws_vpc_workload_subnet  = module.subnet.aws_subnet_id[2], 
+      f5xc_aws_vpc_az_name        = var.aws_az_name
+    }
   }
   f5xc_aws_default_ce_os_version       = true
   f5xc_aws_default_ce_sw_version       = true
@@ -67,7 +70,19 @@ module "site" {
   f5xc_aws_vpc_use_http_https_port     = true
   f5xc_aws_vpc_use_http_https_port_sli = true
   public_ssh_key                       = "${file(var.ssh_public_key_file)}"
+  depends_on                           = [module.subnet]
 }
+
+module "site_status_check" {
+  source            = "../modules/f5xc/status/site"
+  f5xc_namespace    = "system"
+  f5xc_site_name    = var.name
+  f5xc_api_url      = var.f5xc_api_url
+  f5xc_api_token    = var.f5xc_api_token
+  f5xc_tenant       = var.f5xc_tenant
+  depends_on        = [module.site]
+}
+
 
 output "aws_vpc_id" {
   value = module.vpc.aws_vpc_id

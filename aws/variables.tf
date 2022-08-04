@@ -10,6 +10,10 @@ variable "name" {
   type = string
 }
 
+variable "f5xc_aws_cred" {
+  type = string
+}
+
 variable "vpc_cidr_block" {
   type = string
 }
@@ -44,9 +48,11 @@ variable "site_mesh_group" {
   default = ""
 }
 
-#####
-
 variable "f5xc_api_url" {
+  type = string
+}
+
+variable "f5xc_tenant" {
   type = string
 }
 
