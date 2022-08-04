@@ -103,6 +103,18 @@ data "azurerm_network_interface" "sli" {
   depends_on        = [module.site_status_check]
 }
 
+data "azurerm_network_interface" "slo" {
+  name                = "master-0-slo"
+  resource_group_name = "${var.name}-rg"
+  depends_on        = [module.site_status_check]
+}
+
+data "azurerm_public_ip" "pib" {
+  name                = "master-0-public-ip"
+  resource_group_name = "${var.name}-rg"
+  depends_on        = [module.site_status_check]
+}
+
 output "resource_group_name" {
   value = module.resource_group.name
 }
@@ -124,7 +136,17 @@ output "workload" {
   value = module.workload.output
 }
 
-output "site_1a_sli_ip" {
+output "site_1a_sli_private_ip" {
   value = data.azurerm_network_interface.sli.private_ip_address
+  depends_on        = [module.site_status_check]
+}
+
+output "site_1a_slo_private_ip" {
+  value = data.azurerm_network_interface.slo.private_ip_address
+  depends_on        = [module.site_status_check]
+}
+
+output "site_1a_slo_public_ip" {
+  value = data.azurerm_public_ip.pib.ip_address
   depends_on        = [module.site_status_check]
 }
