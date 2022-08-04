@@ -6,6 +6,10 @@ variable "f5xc_api_cert" {
   default = ""
 }
 
+variable "f5xc_tenant" {
+  type = string
+}
+
 variable "f5xc_api_token" {
   type = string
 }
@@ -21,6 +25,10 @@ variable "f5xc_api_p12_file" {
 variable "f5xc_api_key" {
   type = string
   default = ""
+}
+
+variable "f5xc_azure_creds" {
+  type = string
 }
 
 variable "azure_subscription_id" {
