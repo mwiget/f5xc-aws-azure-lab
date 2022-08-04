@@ -92,6 +92,7 @@ data "aws_network_interface" "slo" {
     name    = "tag:ves.io/interface-type"
     values  = [ "site-local-outside" ]
   }
+  depends_on        = [module.site_status_check]
 }
 
 data "aws_network_interface" "sli" {
@@ -103,6 +104,7 @@ data "aws_network_interface" "sli" {
     name    = "tag:ves.io/interface-type"
     values  = [ "site-local-inside" ]
   }
+  depends_on        = [module.site_status_check]
 }
 
 output "aws_vpc_id" {
