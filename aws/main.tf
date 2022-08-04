@@ -124,12 +124,15 @@ output aws_workload_public_ip {
 
 output "sli_private_ip" {
   value = data.aws_network_interface.sli.private_ip
+  depends_on = [module.site_status_check]
 }
 output "slo_private_ip" {
   value = data.aws_network_interface.slo.private_ip
+  depends_on = [module.site_status_check]
 }
 output "slo_public_ip" {
   value = data.aws_network_interface.slo.association[0]["public_ip"]
+  depends_on = [module.site_status_check]
 }
 
 #output "test" {
