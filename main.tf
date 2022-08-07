@@ -19,10 +19,10 @@ module "azure-site-1a" {
   azure_region                = "westus2"
   azure_az                    = "1"
   name                        = "mwlab-azure-1a"
-  vnet_cidr_block             = "100.64.16.0/22"
-  outside_subnet_cidr_block   = "100.64.16.0/24"
-  inside_subnet_cidr_block    = "100.64.17.0/24"
-  allow_cidr_blocks           = [ "100.64.15.0/24" ]
+  vnet_cidr_block             = "10.64.16.0/22"
+  outside_subnet_cidr_block   = "10.64.16.0/24"
+  inside_subnet_cidr_block    = "10.64.17.0/24"
+  allow_cidr_blocks           = [ "10.64.15.0/24" ]
   custom_tags                 = { "site_mesh_group" = "mwlab-aws-azure" }
   workload_user_data          = templatefile(var.workload_user_data_file, { tailscale_key = var.tailscale_key, tailscale_hostname = "mwlab-azure-1a-workload" })
   f5xc_azure_cred             = var.f5xc_azure_cred
@@ -37,10 +37,10 @@ module "azure-site-1b" {
   azure_region                = "westus2"
   azure_az                    = "2"
   name                        = "mwlab-azure-1b"
-  vnet_cidr_block             = "100.64.16.0/22"
-  outside_subnet_cidr_block   = "100.64.16.0/24"
-  inside_subnet_cidr_block    = "100.64.17.0/24"
-  allow_cidr_blocks           = [ "100.64.15.0/24" ]
+  vnet_cidr_block             = "10.64.16.0/22"
+  outside_subnet_cidr_block   = "10.64.16.0/24"
+  inside_subnet_cidr_block    = "10.64.17.0/24"
+  allow_cidr_blocks           = [ "10.64.15.0/24" ]
   custom_tags                 = { "site_mesh_group" = "mwlab-aws-azure" }
   workload_user_data          = templatefile(var.workload_user_data_file, { tailscale_key = var.tailscale_key, tailscale_hostname = "mwlab-azure-1b-workload" })
   f5xc_azure_cred             = var.f5xc_azure_cred
@@ -56,11 +56,11 @@ module "aws-site-2a" {
   aws_region                  = "eu-north-1"
   aws_az_name                 = "eu-north-1a"
   name                        = "mwlab-aws-2a"
-  vpc_cidr_block              = "100.64.16.0/22"
-  outside_subnet_cidr_block   = "100.64.16.0/24"
-  inside_subnet_cidr_block    = "100.64.17.0/24"
-  workload_subnet_cidr_block  = "100.64.18.0/24"
-  allow_cidr_blocks           = [ "100.64.15.0/24" ]
+  vpc_cidr_block              = "10.64.16.0/22"
+  outside_subnet_cidr_block   = "10.64.16.0/24"
+  inside_subnet_cidr_block    = "10.64.17.0/24"
+  workload_subnet_cidr_block  = "10.64.18.0/24"
+  allow_cidr_blocks           = [ "10.64.15.0/24" ]
   custom_tags                 = { "site_mesh_group" = "mwlab-aws-azure" }
   workload_user_data          = templatefile(var.workload_user_data_file, { tailscale_key = var.tailscale_key, tailscale_hostname = "mwlab-aws-2a-workload" })
   f5xc_tenant                 = var.f5xc_tenant
@@ -76,11 +76,11 @@ module "aws-site-2b" {
   aws_region                  = "us-west-2"
   aws_az_name                 = "us-west-2a"
   name                        = "mwlab-aws-2b"
-  vpc_cidr_block              = "100.64.16.0/22"
-  outside_subnet_cidr_block   = "100.64.16.0/24"
-  inside_subnet_cidr_block    = "100.64.17.0/24"
-  workload_subnet_cidr_block  = "100.64.18.0/24"
-  allow_cidr_blocks           = [ "100.64.15.0/24" ]
+  vpc_cidr_block              = "10.64.16.0/22"
+  outside_subnet_cidr_block   = "10.64.16.0/24"
+  inside_subnet_cidr_block    = "10.64.17.0/24"
+  workload_subnet_cidr_block  = "10.64.18.0/24"
+  allow_cidr_blocks           = [ "10.64.15.0/24" ]
   custom_tags                 = { "site_mesh_group" = "mwlab-aws-azure" }
   workload_user_data          = templatefile(var.workload_user_data_file, { tailscale_key = var.tailscale_key, tailscale_hostname = "mwlab-aws-2b-workload" })
   f5xc_tenant                 = var.f5xc_tenant
@@ -96,10 +96,10 @@ module "gcp-site-3a" {
   gcp_region                  = "europe-west6"
   gcp_az_name                 = "europe-west6-a"
   name                        = "mwlab-gcp-3a"
-  network_cidr_block          = "100.64.16.0/22"
-  outside_subnet_cidr_block   = "100.64.16.0/24"
-  inside_subnet_cidr_block    = "100.64.17.0/24"
-  allow_cidr_blocks           = [ "100.64.15.0/24" ]
+  network_cidr_block          = "10.64.16.0/22"
+  outside_subnet_cidr_block   = "10.64.16.0/24"
+  inside_subnet_cidr_block    = "10.64.17.0/24"
+  allow_cidr_blocks           = [ "10.64.15.0/24" ]
   custom_tags                 = { "site_mesh_group" = "mwlab-aws-azure" }
   workload_user_data          = templatefile(var.workload_user_data_file, { tailscale_key = var.tailscale_key, tailscale_hostname = "mwlab-gcp-3a-workload" })
   f5xc_tenant                 = var.f5xc_tenant
@@ -115,10 +115,10 @@ module "gcp-site-3b" {
   gcp_region                  = "europe-west6"
   gcp_az_name                 = "europe-west6-b"
   name                        = "mwlab-gcp-3b"
-  network_cidr_block          = "100.64.16.0/22"
-  outside_subnet_cidr_block   = "100.64.16.0/24"
-  inside_subnet_cidr_block    = "100.64.17.0/24"
-  allow_cidr_blocks           = [ "100.64.15.0/24" ]
+  network_cidr_block          = "10.64.16.0/22"
+  outside_subnet_cidr_block   = "10.64.16.0/24"
+  inside_subnet_cidr_block    = "10.64.17.0/24"
+  allow_cidr_blocks           = [ "10.64.15.0/24" ]
   custom_tags                 = { "site_mesh_group" = "mwlab-aws-azure" }
   workload_user_data          = templatefile(var.workload_user_data_file, { tailscale_key = var.tailscale_key, tailscale_hostname = "mwlab-gcp-3b-workload" })
   f5xc_tenant                 = var.f5xc_tenant

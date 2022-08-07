@@ -37,10 +37,36 @@ module "site_status_check" {
   depends_on        = [module.site]
 }
 
+resource "azurerm_network_security_group" "nsg" {
+  name                = "${var.name}-nsg"
+  resource_group_name = module.resource_group.name
+  location            = var.azure_region
+}
+
+resource "azurerm_network_security_rule" "nsg-rule1" {
+  name                        = "allow_all"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "*"
+  source_port_range           = "*"
+  destination_port_range      = "*"
+  source_address_prefixes     = [ "0.0.0.0/0" ]
+  destination_address_prefix  = "*"
+  resource_group_name         = module.resource_group.name
+  network_security_group_name = azurerm_network_security_group.nsg.name
+}
+
+resource "azurerm_subnet_network_security_group_association" "xc" {
+  subnet_id                 = module.inside_subnet.id
+  network_security_group_id = azurerm_network_security_group.nsg.id
+}
+
+
 module "vnet" {
   source                  = "../mymodules/azure/virtual_network"
   azure_vnet_name         = var.name
-  azure_vnet_primary_ipv4 = "100.64.16.0/22"
+  azure_vnet_primary_ipv4 = var.vnet_cidr_block
   resource_group_name     = module.resource_group.name
   azure_region            = module.resource_group.location
 }

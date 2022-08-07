@@ -52,15 +52,15 @@ resource "volterra_http_loadbalancer" "lb" {
   disable_waf                     = true
 
   advertise_custom {
-    advertise_where {
-      port = var.advertise_port
-      dynamic "site" {
-        for_each = var.advertise_sites
-        content {
+    dynamic "advertise_where" {
+      for_each = var.advertise_sites
+      content {
+        port = var.advertise_port
+        site {
           ip = var.advertise_vip
           network = "SITE_NETWORK_INSIDE"
           site {
-            name      = site.value
+            name      = advertise_where.value
             namespace = "system"
           }
         }
@@ -79,4 +79,6 @@ resource "volterra_http_loadbalancer" "lb" {
   http {
     dns_volterra_managed = false
   }
+
+  depends_on = [ volterra_origin_pool.op ]
 }
