@@ -5,6 +5,10 @@ resource "aws_vpc" "vpc" {
   enable_classiclink   = var.enable_classiclink
   instance_tenancy     = var.instance_tenancy
 
+  tags = {
+    Name = var.aws_vpc_name
+  }
+
   /*dynamic "tags" {
     for_each = var.custom_tags
     content {

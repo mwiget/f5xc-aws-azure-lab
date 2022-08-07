@@ -4,7 +4,7 @@ resource "aws_key_pair" "aws-key" {
 }
 
 resource "aws_security_group" "public" {
-  name   = format("%s-public-sg", var.aws_ec2_instance_name, )
+  name   = format("%s-public-sg", var.aws_ec2_instance_name )
   vpc_id = var.aws_vpc_id
 
   egress {
@@ -48,3 +48,4 @@ resource "aws_instance" "instance" {
     Owner       = var.aws_owner_tag
   }
 }
+

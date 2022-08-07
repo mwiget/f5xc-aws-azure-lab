@@ -10,7 +10,7 @@ module "site" {
   f5xc_azure_site_name            = var.name
   f5xc_azure_region               = var.azure_region
   f5xc_azure_vnet_resource_group  = module.resource_group.name
-  custom_tags                     = { "site_mesh_group" = var.site_mesh_group }
+  custom_tags                     = var.custom_tags
   f5xc_azure_ce_gw_type           = "multi_nic"
   f5xc_azure_vnet_name            = module.vnet.name
   f5xc_azure_az_nodes             = {
@@ -22,20 +22,18 @@ module "site" {
   f5xc_azure_no_worker_nodes          = true
   f5xc_azure_total_worker_nodes       = 0
   public_ssh_key                      = "${file(var.ssh_public_key_file)}"
-  f5xc_azure_cred                     = var.f5xc_azure_creds
-  f5xc_api_url                        = var.f5xc_api_url
-  f5xc_api_p12_file                   = var.f5xc_api_p12_file
   f5xc_tenant                         = var.f5xc_tenant
+  f5xc_azure_cred                     = var.f5xc_azure_cred
   depends_on                          = [module.outside_subnet, module.inside_subnet]
 } 
 
 module "site_status_check" {
-  source            = "../modules/f5xc/status/site"
+  source            = "../mymodules/f5xc/status/site"
   f5xc_namespace    = "system"
   f5xc_site_name    = var.name
+  f5xc_tenant       = var.f5xc_tenant
   f5xc_api_url      = var.f5xc_api_url
   f5xc_api_token    = var.f5xc_api_token
-  f5xc_tenant       = var.f5xc_tenant
   depends_on        = [module.site]
 }
 
@@ -91,7 +89,7 @@ module "workload" {
   size                    = "Standard_DS1_v2"
   username                = "ubuntu"
   ssh_key                 = file(var.ssh_public_key_file)
-  custom_data             = filebase64("${path.module}/workload_custom_data.sh")
+  custom_data             = base64encode(var.workload_user_data)
   subnet_id               = module.inside_subnet.id
   resource_group_name     = module.resource_group.name
   azure_region            = module.resource_group.location

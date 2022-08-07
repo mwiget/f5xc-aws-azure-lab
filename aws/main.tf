@@ -38,7 +38,7 @@ module "workload" {
   aws_subnet_id         = module.subnet.aws_subnet_id[2]
   aws_owner_tag         = var.owner_tag
   ssh_public_key        = file(var.ssh_public_key_file)
-  user_data             = file("${path.module}/workload_custom_data.sh")
+  user_data             = var.workload_user_data
   allow_cidr_blocks     = [ "100.0.0.0/8" ]
 }
 
@@ -47,14 +47,13 @@ module "site" {
   f5xc_namespace                  = "system"
   f5xc_tenant                     = var.f5xc_tenant
   f5xc_aws_region                 = var.aws_region
-  f5xc_aws_cred                   = var.f5xc_aws_cred
   f5xc_aws_vpc_site_name          = var.name
   f5xc_aws_vpc_name_tag           = ""
   f5xc_aws_vpc_id                 = module.vpc.aws_vpc_id
   f5xc_aws_vpc_total_worker_nodes = 0
   f5xc_aws_ce_gw_type             = "multi_nic"
   aws_owner_tag                   = var.owner_tag
-  custom_tags                     = { "site_mesh_group" = var.site_mesh_group }
+  custom_tags                     = var.custom_tags
   f5xc_aws_vpc_az_nodes           = {
     node0 : { 
       f5xc_aws_vpc_id               = module.vpc.aws_vpc_id,
@@ -70,16 +69,17 @@ module "site" {
   f5xc_aws_vpc_use_http_https_port     = true
   f5xc_aws_vpc_use_http_https_port_sli = true
   public_ssh_key                       = "${file(var.ssh_public_key_file)}"
+  f5xc_aws_cred                        = var.f5xc_aws_cred
   depends_on                           = [module.subnet]
 }
 
 module "site_status_check" {
-  source            = "../modules/f5xc/status/site"
+  source            = "../mymodules/f5xc/status/site"
   f5xc_namespace    = "system"
   f5xc_site_name    = var.name
+  f5xc_tenant       = var.f5xc_tenant
   f5xc_api_url      = var.f5xc_api_url
   f5xc_api_token    = var.f5xc_api_token
-  f5xc_tenant       = var.f5xc_tenant
   depends_on        = [module.site]
 }
 

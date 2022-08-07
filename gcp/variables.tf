@@ -2,7 +2,7 @@ variable "workload_user_data" {
   type = string
 }
 
-variable "f5xc_aws_cred" {
+variable "f5xc_gcp_cred" {
   type = string
 }
 
@@ -14,11 +14,11 @@ variable "f5xc_api_token" {
   type = string
 }
 
-variable "aws_region" {
+variable "gcp_region" {
   type = string
 }
 
-variable "aws_az_name" {
+variable "gcp_az_name" {
   type = string
 }
 
@@ -26,8 +26,18 @@ variable "name" {
   type = string
 }
 
-variable "vpc_cidr_block" {
+variable "network_cidr_block" {
   type = string
+}
+
+variable "f5xc_gcp_inside_network_name" {
+  type = string
+  default = ""
+}
+
+variable "f5xc_gcp_inside_subnet_name" {
+  type = string
+  default = ""
 }
 
 variable "outside_subnet_cidr_block" {
@@ -35,10 +45,6 @@ variable "outside_subnet_cidr_block" {
 }
 
 variable "inside_subnet_cidr_block" {
-  type = string
-}
-
-variable "workload_subnet_cidr_block" {
   type = string
 }
 

@@ -1,12 +1,12 @@
-variable "f5xc_api_url" {
-  type = string
-}
-
 variable "f5xc_api_cert" {
   default = ""
 }
 
 variable "f5xc_tenant" {
+  type = string
+}
+
+variable "f5xc_api_url" {
   type = string
 }
 
@@ -27,11 +27,19 @@ variable "f5xc_api_key" {
   default = ""
 }
 
-variable "f5xc_azure_creds" {
+variable "f5xc_azure_cred" {
   type = string
 }
 
 variable "f5xc_aws_cred" {
+  type = string
+}
+
+variable "f5xc_gcp_cred" {
+  type = string
+}
+
+variable "gcp_project_id" {
   type = string
 }
 
@@ -60,3 +68,11 @@ variable "owner_tag" {
   default = "owner unknown"
 }
 
+variable "workload_user_data_file" {
+  type = string
+  default = "./workload_custom_data.sh"
+}
+
+variable "tailscale_key" {
+  type = string
+}

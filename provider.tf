@@ -14,3 +14,20 @@ provider "azurerm" {
   tenant_id       = var.azure_tenant_id != "" ? "" : var.azure_tenant_id
   features {}
 }
+
+provider "aws" {
+  alias = "eu_north_1"
+  region = "eu-north-1"
+}
+
+provider "aws" {
+  alias = "us_west_2"
+  region = "us-west-2"
+}
+
+provider "google" {
+  alias = "europe_west6"
+  region  = "europe-west6"
+  project = var.gcp_project_id
+  credentials = file("~/.config/gcloud/application_default_credentials.json")
+}
