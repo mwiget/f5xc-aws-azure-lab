@@ -17,111 +17,111 @@ $ terraform output
 
 aws-site-2a = {
   "aws_subnet_id" = {
-    "0" = "subnet-02752256b560b7ccc"
-    "1" = "subnet-05df8c86bb2ee8a18"
-    "2" = "subnet-0b2ef20c38be8cb51"
+    "0" = "subnet-03842c97783c95587"
+    "1" = "subnet-0c16e8fcc7f939e69"
+    "2" = "subnet-0729c64b5e913693c"
   }
-  "aws_vpc_id" = "vpc-0d0a87823a07ba3ed"
-  "aws_workload_private_ip" = "100.64.18.118"
-  "aws_workload_public_ip" = "13.48.67.186"
-  "sli_private_ip" = "100.64.17.108"
-  "slo_private_ip" = "100.64.16.114"
-  "slo_public_ip" = "13.50.49.17"
+  "aws_vpc_id" = "vpc-06bdd68a987e3ff8e"
+  "aws_workload_private_ip" = "10.64.18.128"
+  "aws_workload_public_ip" = "13.49.245.152"
+  "sli_private_ip" = "10.64.17.196"
+  "slo_private_ip" = "10.64.16.45"
+  "slo_public_ip" = "13.50.54.218"
 }
 aws-site-2b = {
   "aws_subnet_id" = {
-    "0" = "subnet-08bab1071e26c4c42"
-    "1" = "subnet-0d9d22875d83842bc"
-    "2" = "subnet-08afc5e029941bdbc"
+    "0" = "subnet-0598ad6bc5a237b98"
+    "1" = "subnet-03c3d31fc0f3e122b"
+    "2" = "subnet-002de36c46fb9b461"
   }
-  "aws_vpc_id" = "vpc-0e8405ed1332bfc96"
-  "aws_workload_private_ip" = "100.64.18.31"
-  "aws_workload_public_ip" = "54.201.251.173"
-  "sli_private_ip" = "100.64.17.49"
-  "slo_private_ip" = "100.64.16.46"
-  "slo_public_ip" = "44.225.123.145"
+  "aws_vpc_id" = "vpc-0e3fddb15cc323b47"
+  "aws_workload_private_ip" = "10.64.18.217"
+  "aws_workload_public_ip" = "18.236.155.238"
+  "sli_private_ip" = "10.64.17.26"
+  "slo_private_ip" = "10.64.16.229"
+  "slo_public_ip" = "44.225.20.121"
 }
 azure-site-1a = {
   "azure_vnet" = {
-    "address_space" = "100.64.16.0/22"
+    "address_space" = "10.64.16.0/22"
     "name" = "mwlab-azure-1a"
   }
   "inside_subnet" = {
-    "address_prefix" = "100.64.17.0/24"
+    "address_prefix" = "10.64.17.0/24"
     "name" = "mwlab-azure-1a-inside"
   }
   "outside_subnet" = {
-    "address_prefix" = "100.64.16.0/24"
+    "address_prefix" = "10.64.16.0/24"
     "name" = "mwlab-azure-1a-outside"
   }
   "resource_group_location" = "westus2"
   "resource_group_name" = "mwlab-azure-1a"
-  "sli_private_ip" = "100.64.17.5"
-  "slo_private_ip" = "100.64.16.5"
-  "slo_public_ip" = "20.98.113.143"
+  "sli_private_ip" = "10.64.17.6"
+  "slo_private_ip" = "10.64.16.5"
+  "slo_public_ip" = "20.98.105.131"
   "workload" = {
-    "private_ip" = "100.64.17.4"
-    "public_ip" = "20.98.110.178"
+    "private_ip" = "10.64.17.4"
+    "public_ip" = "20.115.217.202"
   }
 }
 azure-site-1b = {
   "azure_vnet" = {
-    "address_space" = "100.64.16.0/22"
+    "address_space" = "10.64.16.0/22"
     "name" = "mwlab-azure-1b"
   }
   "inside_subnet" = {
-    "address_prefix" = "100.64.17.0/24"
+    "address_prefix" = "10.64.17.0/24"
     "name" = "mwlab-azure-1b-inside"
   }
   "outside_subnet" = {
-    "address_prefix" = "100.64.16.0/24"
+    "address_prefix" = "10.64.16.0/24"
     "name" = "mwlab-azure-1b-outside"
   }
   "resource_group_location" = "westus2"
   "resource_group_name" = "mwlab-azure-1b"
-  "sli_private_ip" = "100.64.17.5"
-  "slo_private_ip" = "100.64.16.5"
-  "slo_public_ip" = "20.9.136.62"
+  "sli_private_ip" = "10.64.17.6"
+  "slo_private_ip" = "10.64.16.5"
+  "slo_public_ip" = "20.51.121.61"
   "workload" = {
-    "private_ip" = "100.64.17.4"
-    "public_ip" = "52.247.230.230"
+    "private_ip" = "10.64.17.4"
+    "public_ip" = "52.247.227.60"
   }
 }
 gcp-site-3a = {
   "site" = <<-EOT
-  gcp_object_name = v08jnor-q8
+  gcp_object_name = v4geegl1zr
   instance_names = [
-    "mwlab-gcp-3a-nvsq",
+    "mwlab-gcp-3a-grf5",
   ]
   master_private_ip_address = {
-    "mwlab-gcp-3a-nvsq" = "100.64.16.2"
+    "mwlab-gcp-3a-grf5" = "10.64.16.2"
   }
   master_public_ip_address = {
-    "mwlab-gcp-3a-nvsq" = "34.65.232.12"
+    "mwlab-gcp-3a-grf5" = "34.65.157.172"
   }
   
   EOT
   "workload" = {
-    "private_ip" = "100.64.17.2"
-    "public_ip" = "34.65.157.172"
+    "private_ip" = "10.64.17.2"
+    "public_ip" = "34.65.108.180"
   }
 }
 gcp-site-3b = {
   "site" = <<-EOT
-  gcp_object_name = v8x0kpde6e
+  gcp_object_name = 
   instance_names = [
-    "mwlab-gcp-3b-w060",
+    "mwlab-gcp-3b-b4t0",
   ]
   master_private_ip_address = {
-    "mwlab-gcp-3b-w060" = "100.64.16.2"
+    "mwlab-gcp-3b-b4t0" = "10.64.16.2"
   }
   master_public_ip_address = {
-    "mwlab-gcp-3b-w060" = "34.65.108.180"
+    "mwlab-gcp-3b-b4t0" = "34.65.232.12"
   }
   
   EOT
   "workload" = {
-    "private_ip" = "100.64.17.2"
+    "private_ip" = "10.64.17.2"
     "public_ip" = "34.65.188.215"
   }
 }
