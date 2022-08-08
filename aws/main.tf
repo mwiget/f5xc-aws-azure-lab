@@ -39,7 +39,7 @@ module "workload" {
   aws_owner_tag         = var.owner_tag
   ssh_public_key        = file(var.ssh_public_key_file)
   user_data             = var.workload_user_data
-  allow_cidr_blocks     = [ "100.0.0.0/8" ]
+  allow_cidr_blocks     = var.allow_cidr_blocks
 }
 
 module "site" {
@@ -63,6 +63,7 @@ module "site" {
       f5xc_aws_vpc_az_name        = var.aws_az_name
     }
   }
+  f5xc_aws_vpc_inside_static_routes    = [ var.workload_subnet_cidr_block ]
   f5xc_aws_default_ce_os_version       = true
   f5xc_aws_default_ce_sw_version       = true
   f5xc_aws_vpc_no_worker_nodes         = true

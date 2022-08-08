@@ -131,7 +131,15 @@ resource "volterra_aws_vpc_site" "aws_vpc_site" {
       }
       no_global_network        = var.f5xc_aws_vpc_no_global_network
       no_outside_static_routes = var.f5xc_aws_vpc_no_outside_static_routes
-      no_inside_static_routes  = var.f5xc_aws_vpc_no_inside_static_routes
+      # TODO     no_inside_static_routes  = var.f5xc_aws_vpc_no_inside_static_routes
+      inside_static_routes {
+        dynamic "static_route_list" {
+          for_each = var.f5xc_aws_vpc_inside_static_routes
+          content {
+            simple_static_route = static_route_list.value
+          }
+        }
+      }
       no_network_policy        = var.f5xc_aws_vpc_no_network_policy
       no_forward_proxy         = var.f5xc_aws_vpc_no_forward_proxy
     }

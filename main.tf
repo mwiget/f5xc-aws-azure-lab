@@ -60,7 +60,7 @@ module "aws-site-2a" {
   outside_subnet_cidr_block   = "10.64.16.0/24"
   inside_subnet_cidr_block    = "10.64.17.0/24"
   workload_subnet_cidr_block  = "10.64.18.0/24"
-  allow_cidr_blocks           = [ "10.64.15.0/24" ]
+  allow_cidr_blocks           = [ "10.64.0.0/16" ]
   custom_tags                 = { "site_mesh_group" = "mwlab-aws-azure" }
   workload_user_data          = templatefile(var.workload_user_data_file, { tailscale_key = var.tailscale_key, tailscale_hostname = "mwlab-aws-2a-workload" })
   f5xc_tenant                 = var.f5xc_tenant
@@ -80,7 +80,7 @@ module "aws-site-2b" {
   outside_subnet_cidr_block   = "10.64.16.0/24"
   inside_subnet_cidr_block    = "10.64.17.0/24"
   workload_subnet_cidr_block  = "10.64.18.0/24"
-  allow_cidr_blocks           = [ "10.64.15.0/24" ]
+  allow_cidr_blocks           = [ "10.64.0.0/16" ]
   custom_tags                 = { "site_mesh_group" = "mwlab-aws-azure" }
   workload_user_data          = templatefile(var.workload_user_data_file, { tailscale_key = var.tailscale_key, tailscale_hostname = "mwlab-aws-2b-workload" })
   f5xc_tenant                 = var.f5xc_tenant
