@@ -15,6 +15,7 @@ module "smg" {
 }
 
 module "azure-site-1a" {
+  count                       = 1
   source                      = "./azure"
   azure_region                = "westus2"
   azure_az                    = "1"
@@ -33,6 +34,7 @@ module "azure-site-1a" {
 }
 
 module "azure-site-1b" {
+  count                       = 1
   source                      = "./azure"
   azure_region                = "westus2"
   azure_az                    = "2"
@@ -51,6 +53,7 @@ module "azure-site-1b" {
 }
 
 module "aws-site-2a" {
+  count                       = 1
   source                      = "./aws"
   providers                   = { aws = aws.eu_north_1 }
   aws_region                  = "eu-north-1"
@@ -71,10 +74,11 @@ module "aws-site-2a" {
 }
 
 module "aws-site-2b" {
+  count                       = 1
   source                      = "./aws"
-  providers                   = { aws = aws.us_west_2 }
-  aws_region                  = "us-west-2"
-  aws_az_name                 = "us-west-2a"
+  providers                   = { aws = aws.eu_north_1 }
+  aws_region                  = "eu-north-1"
+  aws_az_name                 = "eu-north-1b"
   name                        = "mwlab-aws-2b"
   vpc_cidr_block              = "10.64.16.0/22"
   outside_subnet_cidr_block   = "10.64.16.0/24"
@@ -91,6 +95,7 @@ module "aws-site-2b" {
 }
 
 module "gcp-site-3a" {
+  count                       = 1
   source                      = "./gcp"
   providers                   = { google = google.europe_west6 }
   gcp_region                  = "europe-west6"
@@ -110,6 +115,7 @@ module "gcp-site-3a" {
 }
 
 module "gcp-site-3b" {
+  count                       = 1
   source                      = "./gcp"
   providers                   = { google = google.europe_west6 }
   gcp_region                  = "europe-west6"
