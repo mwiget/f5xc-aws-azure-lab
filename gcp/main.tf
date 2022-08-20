@@ -33,6 +33,17 @@ resource "google_compute_firewall" "allow-http" {
   source_ranges = var.allow_cidr_blocks
   target_tags = ["http"] 
 }
+
+resource "google_compute_route" "vip" {
+  name        = "network-route"
+  dest_range  = var.allow_cidr_blocks[0]
+  network     = google_compute_network.vpc.name
+  next_hop_instance = regex("mwlab-gcp-\\w+-\\w+",module.site.output.tf_output)
+  next_hop_instance_zone = var.gcp_az_name
+  priority    = 100
+  depends_on        = [module.site]
+}
+
 resource "google_compute_firewall" "allow-ssh" {
   name    = "${var.name}-fw-allow-bastion"
   network = google_compute_network.vpc.name

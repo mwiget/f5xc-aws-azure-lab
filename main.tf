@@ -25,7 +25,7 @@ module "azure-site-1a" {
   inside_subnet_cidr_block    = "10.64.17.0/24"
   allow_cidr_blocks           = [ "10.64.15.0/24" ]
   custom_tags                 = { "site_mesh_group" = "mwlab-aws-azure" }
-  workload_user_data          = templatefile(var.workload_user_data_file, { tailscale_key = var.tailscale_key, tailscale_hostname = "mwlab-azure-1a-workload" })
+  workload_user_data          = templatefile(var.workload_user_data_file, { tailscale_key = var.tailscale_key, tailscale_hostname = "mwlab-azure-1a-workload", grafana_agent_stack_id = var.grafana_agent_stack_id, grafana_api_key = var.grafana_api_key, grafana_api_url = var.grafana_api_url })
   f5xc_azure_cred             = var.f5xc_azure_cred
   f5xc_tenant                 = var.f5xc_tenant
   f5xc_api_url                = var.f5xc_api_url
@@ -44,7 +44,7 @@ module "azure-site-1b" {
   inside_subnet_cidr_block    = "10.64.17.0/24"
   allow_cidr_blocks           = [ "10.64.15.0/24" ]
   custom_tags                 = { "site_mesh_group" = "mwlab-aws-azure" }
-  workload_user_data          = templatefile(var.workload_user_data_file, { tailscale_key = var.tailscale_key, tailscale_hostname = "mwlab-azure-1b-workload" })
+  workload_user_data          = templatefile(var.workload_user_data_file, { tailscale_key = var.tailscale_key, tailscale_hostname = "mwlab-azure-1b-workload", grafana_agent_stack_id = var.grafana_agent_stack_id, grafana_api_key = var.grafana_api_key, grafana_api_url = var.grafana_api_url })
   f5xc_azure_cred             = var.f5xc_azure_cred
   f5xc_tenant                 = var.f5xc_tenant
   f5xc_api_url                = var.f5xc_api_url
@@ -65,7 +65,7 @@ module "aws-site-2a" {
   workload_subnet_cidr_block  = "10.64.18.0/24"
   allow_cidr_blocks           = [ "10.64.0.0/16" ]
   custom_tags                 = { "site_mesh_group" = "mwlab-aws-azure" }
-  workload_user_data          = templatefile(var.workload_user_data_file, { tailscale_key = var.tailscale_key, tailscale_hostname = "mwlab-aws-2a-workload" })
+  workload_user_data          = templatefile(var.workload_user_data_file, { tailscale_key = var.tailscale_key, tailscale_hostname = "mwlab-aws-2a-workload", grafana_agent_stack_id = var.grafana_agent_stack_id, grafana_api_key = var.grafana_api_key, grafana_api_url = var.grafana_api_url })
   f5xc_tenant                 = var.f5xc_tenant
   f5xc_api_url                = var.f5xc_api_url
   f5xc_api_token              = var.f5xc_api_token
@@ -86,7 +86,7 @@ module "aws-site-2b" {
   workload_subnet_cidr_block  = "10.64.18.0/24"
   allow_cidr_blocks           = [ "10.64.0.0/16" ]
   custom_tags                 = { "site_mesh_group" = "mwlab-aws-azure" }
-  workload_user_data          = templatefile(var.workload_user_data_file, { tailscale_key = var.tailscale_key, tailscale_hostname = "mwlab-aws-2b-workload" })
+  workload_user_data          = templatefile(var.workload_user_data_file, { tailscale_key = var.tailscale_key, tailscale_hostname = "mwlab-aws-2b-workload", grafana_agent_stack_id = var.grafana_agent_stack_id, grafana_api_key = var.grafana_api_key, grafana_api_url = var.grafana_api_url })
   f5xc_tenant                 = var.f5xc_tenant
   f5xc_api_url                = var.f5xc_api_url
   f5xc_api_token              = var.f5xc_api_token
@@ -106,7 +106,7 @@ module "gcp-site-3a" {
   inside_subnet_cidr_block    = "10.64.17.0/24"
   allow_cidr_blocks           = [ "10.64.15.0/24" ]
   custom_tags                 = { "site_mesh_group" = "mwlab-aws-azure" }
-  workload_user_data          = templatefile(var.workload_user_data_file, { tailscale_key = var.tailscale_key, tailscale_hostname = "mwlab-gcp-3a-workload" })
+  workload_user_data          = templatefile(var.workload_user_data_file, { tailscale_key = var.tailscale_key, tailscale_hostname = "mwlab-gcp-3a-workload", grafana_agent_stack_id = var.grafana_agent_stack_id, grafana_api_key = var.grafana_api_key, grafana_api_url = var.grafana_api_url })
   f5xc_tenant                 = var.f5xc_tenant
   f5xc_api_url                = var.f5xc_api_url
   f5xc_api_token              = var.f5xc_api_token
@@ -126,7 +126,7 @@ module "gcp-site-3b" {
   inside_subnet_cidr_block    = "10.64.17.0/24"
   allow_cidr_blocks           = [ "10.64.15.0/24" ]
   custom_tags                 = { "site_mesh_group" = "mwlab-aws-azure" }
-  workload_user_data          = templatefile(var.workload_user_data_file, { tailscale_key = var.tailscale_key, tailscale_hostname = "mwlab-gcp-3b-workload" })
+  workload_user_data          = templatefile(var.workload_user_data_file, { tailscale_key = var.tailscale_key, tailscale_hostname = "mwlab-gcp-3b-workload", grafana_agent_stack_id = var.grafana_agent_stack_id, grafana_api_key = var.grafana_api_key, grafana_api_url = var.grafana_api_url })
   f5xc_tenant                 = var.f5xc_tenant
   f5xc_api_url                = var.f5xc_api_url
   f5xc_api_token              = var.f5xc_api_token

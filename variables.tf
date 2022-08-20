@@ -76,3 +76,18 @@ variable "workload_user_data_file" {
 variable "tailscale_key" {
   type = string
 }
+
+variable "grafana_agent_stack_id" {
+  type = string
+  default = ""
+}
+
+variable "grafana_api_key" {
+  type = string
+  default = ""
+}
+
+variable "grafana_api_url" {
+  type = string
+  default = ""
+}
