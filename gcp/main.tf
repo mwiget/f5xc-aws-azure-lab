@@ -35,7 +35,7 @@ resource "google_compute_firewall" "allow-http" {
 }
 
 resource "google_compute_route" "vip" {
-  name        = "network-route"
+  name        = "${var.name}-network-route"
   dest_range  = var.allow_cidr_blocks[0]
   network     = google_compute_network.vpc.name
   next_hop_instance = regex("mwlab-gcp-\\w+-\\w+",module.site.output.tf_output)
