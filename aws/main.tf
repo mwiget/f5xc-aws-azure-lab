@@ -4,7 +4,6 @@ module "vpc" {
   aws_vpc_name          = var.name
   enable_dns_support    = "true"
   enable_dns_hostnames  = "true"
-  enable_classiclink    = "false"
   instance_tenancy      = "default"
   aws_region            = var.aws_region
   aws_az_name           = var.aws_az_name

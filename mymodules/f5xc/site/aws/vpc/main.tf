@@ -32,6 +32,10 @@ resource "volterra_aws_vpc_site" "aws_vpc_site" {
     volterra_software_version = local.f5xc_aws_ce_sw_version
   }
 
+  site_local_control_plane {
+    no_local_control_plane = var.f5xc_aws_vpc_no_local_control_plane
+  }
+
   dynamic "ingress_gw" {
     for_each = var.f5xc_aws_ce_gw_type == "single_nic" ? [1] : []
     content {
@@ -56,10 +60,6 @@ resource "volterra_aws_vpc_site" "aws_vpc_site" {
             existing_subnet_id = var.f5xc_aws_vpc_primary_ipv4 == "" ? var.f5xc_aws_vpc_az_nodes[az_nodes.key]["f5xc_aws_vpc_local_subnet"] : null
           }
         }
-      }
-
-      local_control_plane {
-        no_local_control_plane = var.f5xc_aws_vpc_no_local_control_plane
       }
     }
   }
@@ -126,9 +126,6 @@ resource "volterra_aws_vpc_site" "aws_vpc_site" {
         }
       }
 
-      local_control_plane {
-        no_local_control_plane = var.f5xc_aws_vpc_no_local_control_plane
-      }
       no_global_network        = var.f5xc_aws_vpc_no_global_network
       no_outside_static_routes = var.f5xc_aws_vpc_no_outside_static_routes
       # TODO     no_inside_static_routes  = var.f5xc_aws_vpc_no_inside_static_routes

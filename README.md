@@ -166,3 +166,47 @@ delete resource group
 az group delete --name mw-azure-site1
 ```
 
+
+something destroy fails with
+
+```
+s/mwlab-azure-1b-outside]
+module.azure-site-1b[0].module.outside_subnet.azurerm_subnet.sn: Still destroying... [id=/subscriptions/e9cbbd48-704d-4dfa-bf62-...zure-1b/subnets/mwlab-azure-1b-outside, 10s elapsed]
+module.azure-site-1b[0].module.outside_subnet.azurerm_subnet.sn: Destruction complete after 11s
+╷
+│ Error: waiting for update of Network Interface: (Name "mwlab-azure-1b" / Resource Group "mwlab-azure-1b"): Code="OperationNotAllowed" Message="Operation 'startTenantUpdate' is not allowed on VM 'mwlab-azure-1b' since the VM is marked for deletion. You can only retry the Delete operation (or wait for an ongoing one to complete)." Details=[]
+│ 
+│ 
+╵
+╷
+│ Error: removing Network Security Group Association from Subnet: (Name "mwlab-azure-1b-inside" / Virtual Network Name "mwlab-azure-1b" / Resource Group "mwlab-azure-1b"): network.SubnetsClient#CreateOrUpdate: Failure sending request: StatusCode=400 -- Original Error: Code="ReferencedResourceNotProvisioned" Message="Cannot proceed with operation because resource /subscriptions/e9cbbd48-704d-4dfa-bf62-60edda755a66/resourceGroups/mwlab-azure-1b/providers/Microsoft.Network/networkInterfaces/mwlab-azure-1b/ipConfigurations/internal used by resource /subscriptions/e9cbbd48-704d-4dfa-bf62-60edda755a66/resourceGroups/mwlab-azure-1b/providers/Microsoft.Network/virtualNetworks/mwlab-azure-1b/subnets/mwlab-azure-1b-inside is not in Succeeded state. Resource is in Failed state and the last operation that updated/is updating the resource is PutNicOperation." Details=[]
+│ 
+```
+
+Rerun destroy after a few minutes will succeed.
+
+
+## validation
+
+```
+$ ./validate.sh
+mwlab-azure-1a-workload curl workload.site1 ... Short Name: mwlab-azure-1b good
+mwlab-azure-1a-workload curl workload.site2 ... Short Name: ip-10-64-18-155 good
+mwlab-azure-1a-workload curl workload.site3 ... Short Name: mwlab-gcp-3b good
+mwlab-azure-1b-workload curl workload.site1 ... Short Name: mwlab-azure-1b good
+mwlab-azure-1b-workload curl workload.site2 ... Short Name: ip-10-64-18-155 good
+mwlab-azure-1b-workload curl workload.site3 ... Short Name: mwlab-gcp-3a good
+mwlab-aws-2a-workload curl workload.site1 ... Short Name: mwlab-azure-1a good
+mwlab-aws-2a-workload curl workload.site2 ... Short Name: ip-10-64-18-241 good
+mwlab-aws-2a-workload curl workload.site3 ... Short Name: mwlab-gcp-3b good
+mwlab-aws-2b-workload curl workload.site1 ... Short Name: mwlab-azure-1a good
+mwlab-aws-2b-workload curl workload.site2 ... Short Name: ip-10-64-18-155 good
+mwlab-aws-2b-workload curl workload.site3 ... Short Name: mwlab-gcp-3b good
+mwlab-gcp-3a-workload curl workload.site1 ... Short Name: mwlab-azure-1a good
+mwlab-gcp-3a-workload curl workload.site2 ... Short Name: ip-10-64-18-155 good
+mwlab-gcp-3a-workload curl workload.site3 ... Short Name: mwlab-gcp-3b good
+mwlab-gcp-3b-workload curl workload.site1 ... Short Name: mwlab-azure-1b good
+mwlab-gcp-3b-workload curl workload.site2 ... Short Name: ip-10-64-18-155 good
+mwlab-gcp-3b-workload curl workload.site3 ... Short Name: mwlab-gcp-3b good
+```
+

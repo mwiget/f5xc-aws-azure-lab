@@ -23,13 +23,14 @@ resource "volterra_azure_vnet_site" "vnet" {
     volterra_software_version = local.f5xc_azure_ce_sw_version
   }
 
+  site_local_control_plane {
+    no_local_control_plane = var.f5xc_azure_no_local_control_plane
+  }
+
   dynamic "ingress_gw" {
     for_each = var.f5xc_azure_ce_gw_type == "single_nic" ? [1] : []
     content {
       azure_certified_hw = var.f5xc_azure_ce_certified_hw[var.f5xc_azure_ce_gw_type]
-      local_control_plane {
-        no_local_control_plane = var.f5xc_azure_no_local_control_plane
-      }
       dynamic "az_nodes" {
         for_each = var.f5xc_azure_az_nodes
         content {
@@ -126,9 +127,6 @@ resource "volterra_azure_vnet_site" "vnet" {
       }
 
       azure_certified_hw = var.f5xc_azure_ce_certified_hw[var.f5xc_azure_ce_gw_type]
-      local_control_plane {
-        no_local_control_plane = var.f5xc_azure_no_local_control_plane
-      }
 
       no_global_network        = var.f5xc_azure_no_global_network
       no_outside_static_routes = var.f5xc_azure_no_outside_static_routes

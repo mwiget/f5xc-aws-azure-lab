@@ -21,6 +21,10 @@ resource "volterra_gcp_vpc_site" "gcp_site" {
     volterra_software_version = local.f5xc_aws_ce_sw_version
   }
 
+  site_local_control_plane {
+    no_local_control_plane = var.f5xc_gcp_no_local_control_plane
+  }
+
   dynamic "ingress_gw" {
     for_each = var.f5xc_gcp_ce_gw_type == "single_nic" ? [1] : []
     content {
@@ -41,10 +45,6 @@ resource "volterra_gcp_vpc_site" "gcp_site" {
           primary_ipv4 = var.f5xc_gcp_outside_primary_ipv4
           subnet_name  = local.f5xc_gcp_outside_subnet_name
         }
-      }
-
-      local_control_plane {
-        no_local_control_plane = var.f5xc_gcp_no_local_control_plane
       }
 
       node_number = var.f5xc_gcp_node_number
@@ -118,10 +118,6 @@ resource "volterra_gcp_vpc_site" "gcp_site" {
             }
           }
         }
-      }
-
-      local_control_plane {
-        no_local_control_plane = var.f5xc_gcp_no_local_control_plane
       }
 
       no_global_network        = var.f5xc_gcp_no_global_network

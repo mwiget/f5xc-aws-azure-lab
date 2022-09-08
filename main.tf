@@ -155,3 +155,6 @@ output "gcp-site-3b" {
   value = module.gcp-site-3b
 }
 
+output "namespace" {
+  value = volterra_namespace.ns.name
+}
