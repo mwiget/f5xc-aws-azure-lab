@@ -1,7 +1,6 @@
 module "apps_site1" {
   count                   = 1
   source                  = "./apps"
-  providers               = { volterra = volterra.default }
   namespace               = volterra_namespace.ns.name
   name                    = "mwlabs-site1"
   domains                 = ["workload.site1"]
@@ -23,7 +22,6 @@ module "apps_site1" {
 module "apps_site2" {
   count                   = 1
   source                  = "./apps"
-  providers               = { volterra = volterra.default }
   namespace               = volterra_namespace.ns.name
   name                    = "mwlabs-site2"
   domains                 = ["workload.site2"]
@@ -45,7 +43,6 @@ module "apps_site2" {
 module "apps_site3" {
   count                   = 1
   source                  = "./apps"
-  providers               = { volterra = volterra.default }
   namespace               = volterra_namespace.ns.name
   name                    = "mwlabs-site3"
   domains                 = ["workload.site3"]

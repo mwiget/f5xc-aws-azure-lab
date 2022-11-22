@@ -5,6 +5,9 @@ resource "volterra_gcp_vpc_site" "gcp_site" {
   gcp_region               = var.f5xc_gcp_region
   instance_type            = var.f5xc_gcp_ce_instance_type
   logs_streaming_disabled  = var.f5xc_gcp_logs_streaming_disabled
+  offline_survivability_mode {
+    enable_offline_survivability_mode = true
+  }
   default_blocked_services = var.f5xc_gcp_default_blocked_services
   cloud_credentials {
     name      = var.f5xc_gcp_cred

@@ -32,7 +32,7 @@ cat > /root/tester.sh <<EOF
 #!/bin/bash
 while true; do
   for site in workload.site1 workload.site2 workload.site3; do
-    curl -m 3 $$site/txt
+    curl -m 3 \$site/txt
   done
   sleep 5
 done

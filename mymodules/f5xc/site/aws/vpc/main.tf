@@ -22,6 +22,9 @@ resource "volterra_aws_vpc_site" "aws_vpc_site" {
   disk_size               = var.f5xc_aws_vpc_ce_instance_disk_size
   instance_type           = var.f5xc_aws_vpc_ce_instance_type
   logs_streaming_disabled = var.f5xc_aws_vpc_logs_streaming_disabled
+  offline_survivability_mode {
+    enable_offline_survivability_mode = true
+  }
 
   os {
     default_os_version       = var.f5xc_aws_default_ce_os_version

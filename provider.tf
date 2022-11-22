@@ -1,5 +1,4 @@
 provider "volterra" {
-  alias        = "default"
   api_p12_file = var.f5xc_api_p12_file
   api_cert     = var.f5xc_api_p12_file != "" ? "" : var.f5xc_api_cert
   api_key      = var.f5xc_api_p12_file != "" ? "" : var.f5xc_api_key
@@ -12,7 +11,11 @@ provider "azurerm" {
   client_id       = var.azure_client_id != "" ? "" : var.azure_client_id 
   client_secret   = var.azure_client_secret != "" ? "" : var.azure_client_secret
   tenant_id       = var.azure_tenant_id != "" ? "" : var.azure_tenant_id
-  features {}
+  features {
+    resource_group {
+      prevent_deletion_if_contains_resources = true
+    }
+  }
 }
 
 provider "aws" {

@@ -11,6 +11,9 @@ resource "volterra_azure_vnet_site" "vnet" {
   }
 
   logs_streaming_disabled = var.f5xc_azure_logs_streaming_disabled
+  offline_survivability_mode {
+    enable_offline_survivability_mode = true
+  }
   azure_region            = var.f5xc_azure_region
   resource_group          = local.f5xc_azure_resource_group
 

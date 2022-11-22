@@ -55,7 +55,9 @@ module "azure-site-1b" {
 module "aws-site-2a" {
   count                       = 1
   source                      = "./aws"
-  providers                   = { aws = aws.eu_north_1 }
+  providers                   = { 
+    aws = aws.eu_north_1 
+  }
   aws_region                  = "eu-north-1"
   aws_az_name                 = "eu-north-1a"
   name                        = "mwlab-aws-2a"
@@ -76,7 +78,9 @@ module "aws-site-2a" {
 module "aws-site-2b" {
   count                       = 1
   source                      = "./aws"
-  providers                   = { aws = aws.eu_north_1 }
+  providers                   = { 
+    aws = aws.eu_north_1 
+  }
   aws_region                  = "eu-north-1"
   aws_az_name                 = "eu-north-1b"
   name                        = "mwlab-aws-2b"
@@ -97,7 +101,9 @@ module "aws-site-2b" {
 module "gcp-site-3a" {
   count                       = 1
   source                      = "./gcp"
-  providers                   = { google = google.europe_west6 }
+  providers                   = { 
+    google = google.europe_west6 
+  }
   gcp_region                  = "europe-west6"
   gcp_az_name                 = "europe-west6-a"
   name                        = "mwlab-gcp-3a"
@@ -117,7 +123,9 @@ module "gcp-site-3a" {
 module "gcp-site-3b" {
   count                       = 1
   source                      = "./gcp"
-  providers                   = { google = google.europe_west6 }
+  providers                   = { 
+    google = google.europe_west6 
+  }
   gcp_region                  = "europe-west6"
   gcp_az_name                 = "europe-west6-b"
   name                        = "mwlab-gcp-3b"
